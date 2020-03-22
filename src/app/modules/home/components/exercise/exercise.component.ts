@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExerciseComponent implements OnInit {
 
+  // TODO 
+  // 1. exercise interface
+  // 2. make exercise an input
+  // 3. create a new exercise component
+  // 4. create a table component. abstract headers and property
+  // 5. exercise needs adjusted weight
   constructor() { }
   boxSquats: any[] = [];
   displayedColumns: string[] = ['setNumber', 'prevWeight', 'currentWeight', 'expectedRep', 'actualRep', 'percentIncrease'];

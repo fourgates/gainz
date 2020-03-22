@@ -1,35 +1,33 @@
 <table mat-table [dataSource]="boxSquats[0].sets" >
+    <ng-container matColumnDef="setNumber">
+        <th mat-header-cell *matHeaderCellDef> Set # </th>
+        <td mat-cell *matCellDef="let element"> {{element.setNumber}} </td>
+    </ng-container>
 
-      
-        <ng-container matColumnDef="setNumber">
-          <th mat-header-cell *matHeaderCellDef> Set # </th>
-          <td mat-cell *matCellDef="let element"> {{element.setNumber}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="prevWeight">
-          <th mat-header-cell *matHeaderCellDef> Prev Weight </th>
-          <td mat-cell *matCellDef="let element"> {{element.prevWeight}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="currentWeight">
-          <th mat-header-cell *matHeaderCellDef> Current Weight </th>
-          <td mat-cell *matCellDef="let element"> {{element.currentWeight}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="expectedRep">
-          <th mat-header-cell *matHeaderCellDef> Expected Rep </th>
-          <td mat-cell *matCellDef="let element"> {{element.expectedRep}} </td>
-        </ng-container>
+    <ng-container matColumnDef="prevWeight">
+        <th mat-header-cell *matHeaderCellDef> Prev Weight </th>
+        <td mat-cell *matCellDef="let element"> {{element.prevWeight}} </td>
+    </ng-container>
 
-        <ng-container matColumnDef="actualRep">
-            <th mat-header-cell *matHeaderCellDef> Actual Rep </th>
-            <td mat-cell *matCellDef="let element"> {{element.actualRep}} </td>
-        </ng-container>
+    <ng-container matColumnDef="currentWeight">
+        <th mat-header-cell *matHeaderCellDef> Current Weight </th>
+        <td mat-cell *matCellDef="let element"> {{element.currentWeight}} </td>
+    </ng-container>
 
-        <ng-container matColumnDef="percentIncrease">
-            <th mat-header-cell *matHeaderCellDef> Increase </th>
-            <td mat-cell *matCellDef="let element"> {{element.percentIncrease}} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+    <ng-container matColumnDef="expectedRep">
+        <th mat-header-cell *matHeaderCellDef> Expected Rep </th>
+        <td mat-cell *matCellDef="let element"> {{element.expectedRep}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actualRep">
+        <th mat-header-cell *matHeaderCellDef> Actual Rep </th>
+        <td mat-cell *matCellDef="let element"> {{element.actualRep}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="percentIncrease">
+        <th mat-header-cell *matHeaderCellDef> Increase </th>
+        <td mat-cell *matCellDef="let element"> {{element.percentIncrease}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
