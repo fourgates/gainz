@@ -19,8 +19,12 @@ export class ExerciseComponent implements OnInit {
   displayedColumns: string[] = ['setNumber', 'prevWeight', 'currentWeight', 'expectedRep', 'actualRep', 'percentChange'];
   ngOnInit(): void {
     this.exercise.sets.forEach(set=>{
-      set.percentChange = (set.prevWeight / (set.currentWeight  - set.prevWeight)).toFixed(0);
+      set.percentChange = this.calculatePercentChange(set)
     })
     this.data = this.exercise.sets;
+  }
+
+  calculatePercentChange(set: Set){
+    return (set.prevWeight / (set.currentWeight  - set.prevWeight)).toFixed(0);
   }
 }
