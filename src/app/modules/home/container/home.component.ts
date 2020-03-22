@@ -31,4 +31,10 @@ export class HomeComponent implements OnInit {
     console.log('add new exercise');
     this.showNewFlg = true;
   }
+  saveNewExcercise(newExcercise: Exercise){
+    console.log('new', newExcercise);
+    // TODO - save
+    this.showNewFlg = false;
+    this.boxSquats.push(newExcercise);
+  }
 }

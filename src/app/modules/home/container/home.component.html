@@ -21,10 +21,8 @@
   </span>
 </div>
 <div class="page-content row" style="padding:20px">
-    <app-exercise [exercise]="boxSquats[0]" class="col-4"></app-exercise>
-    <app-exercise [exercise]="boxSquats[1]" class="col-4"></app-exercise>
-    <app-exercise [exercise]="boxSquats[2]" class="col-4"></app-exercise>
+    <app-exercise *ngFor="let e of boxSquats" [exercise]="e" class="col-4"></app-exercise>
 </div>
 <div class="page-content row" style="padding:20px" *ngIf="showNewFlg">
-    <app-new-exercise [exercise]="boxSquats[2]" class="col-4"></app-new-exercise>
+    <app-new-exercise [exercise]="boxSquats[2]" (saveExercise)="saveNewExcercise($event)" class="col-4"></app-new-exercise>
 </div>

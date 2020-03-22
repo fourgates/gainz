@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 export class NewExerciseComponent implements OnInit {
 
   @Input() exercise: Exercise;
-  @Output() voted = new EventEmitter<Exercise>();
+  @Output() saveExercise = new EventEmitter<Exercise>();
 
   data: Set[];
   form: FormGroup;// = this.fb.group({ 'currentWeight': null, 'actualRep': null});
@@ -32,6 +32,7 @@ export class NewExerciseComponent implements OnInit {
       set.percentChange = (set.prevWeight / (set.currentWeight  - set.prevWeight)).toFixed(0);
       this.formSetReps.push(new FormControl());
       this.formSetWeight.push(new FormControl());
+      set.prevWeight = set.currentWeight;
     })
     this.data = this.exercise.sets;
 
@@ -65,6 +66,7 @@ export class NewExerciseComponent implements OnInit {
       out.sets.push(current);
     })
     console.log('out', out);
+    this.saveExercise.emit(out);
   }
   get sets(): FormArray { return this.form.get('sets') as FormArray; }
   get weights(): FormArray { return this.form.get('weights') as FormArray; }
