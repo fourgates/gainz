@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="boxSquats[0].sets" >
+<table mat-table [dataSource]="exercise.sets" >
     <ng-container matColumnDef="setNumber">
         <th mat-header-cell *matHeaderCellDef> Set # </th>
         <td mat-cell *matCellDef="let element"> {{element.setNumber}} </td>
