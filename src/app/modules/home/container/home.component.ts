@@ -8,6 +8,7 @@ import { Exercise } from '../components/exercise/exercise.dt';
 })
 export class HomeComponent implements OnInit {
   boxSquats: Exercise[] = [];
+  showNewFlg: boolean;
   constructor() { }
   ngOnInit(): void {
     for(let i=0;i<3;i++){
@@ -26,5 +27,8 @@ export class HomeComponent implements OnInit {
     }
     console.log('box', this.boxSquats);
   }
-
+  addNewExercise(){
+    console.log('add new exercise');
+    this.showNewFlg = true;
+  }
 }
