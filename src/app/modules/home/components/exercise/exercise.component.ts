@@ -22,7 +22,5 @@ export class ExerciseComponent implements OnInit {
       set.percentChange = (set.prevWeight / (set.currentWeight  - set.prevWeight)).toFixed(0);
     })
     this.data = this.exercise.sets;
-    console.log('this', this.exercise);
   }
-
 }

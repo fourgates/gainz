@@ -1,0 +1,40 @@
+<form [formGroup]="form">
+    <table *ngIf="data" mat-table [dataSource]="data" >
+        <ng-container matColumnDef="setNumber">
+            <th mat-header-cell *matHeaderCellDef> Set # </th>
+            <td mat-cell *matCellDef="let element"> {{element.setNumber}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="prevWeight">
+            <th mat-header-cell *matHeaderCellDef> Prev Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.prevWeight}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="currentWeight" formArrayName="sets">
+            <th mat-header-cell *matHeaderCellDef> Current Weight </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <input matInput [formControlName]="i" style="width:50%">
+            </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="expectedRep">
+            <th mat-header-cell *matHeaderCellDef> Expected Rep </th>
+            <td mat-cell *matCellDef="let element"> {{element.expectedRep}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="actualRep" formArrayName="weights">
+            <th mat-header-cell *matHeaderCellDef> Actual Rep </th>
+            <td mat-cell *matCellDef="let element; let i = index"> 
+                <input matInput [formControlName]="i" style="width:50%">
+            </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="percentChange">
+            <th mat-header-cell *matHeaderCellDef> % Change </th>
+            <td mat-cell *matCellDef="let element"> {{element.percentChange}}%</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</form>
+<button (click)="save()">Save</button>
