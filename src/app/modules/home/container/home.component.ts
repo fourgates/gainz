@@ -18,8 +18,7 @@ export class HomeComponent implements OnInit {
           prevWeight: 100,
           currentWeight: 110,
           expectedRep: 5 - x,
-          actualRep: 5 - x,
-          percentIncrease: '5%'
+          actualRep: 5 - x
         };
         exercise.sets.push(set);
       }
