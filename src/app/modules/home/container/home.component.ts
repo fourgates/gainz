@@ -1,30 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Exercise } from '../components/exercise/exercise.dt';
+import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  providers: [ExerciseService],
   styles: []
 })
 export class HomeComponent implements OnInit {
   boxSquats: Exercise[] = [];
   showNewFlg: boolean;
-  constructor() { }
+  constructor(private exerciseService: ExerciseService) { }
+
+  // TODO - on change of exercise, call service and get diff exercises
+  // TODO 
   ngOnInit(): void {
-    for(let i=0;i<3;i++){
-      let exercise = {sets: []};
-      for(let x=0;x<5;x++){
-        let set = {
-          setNumber: x + 1,
-          prevWeight: 100,
-          currentWeight: 110,
-          expectedRep: 5 - x,
-          actualRep: 5 - x
-        };
-        exercise.sets.push(set);
-      }
-      this.boxSquats.push(exercise);
-    }
+    this.exerciseService.getExercise(123, 234).subscribe(res=>{
+      this.boxSquats = res;
+    })
     console.log('box', this.boxSquats);
   }
   addNewExercise(){
