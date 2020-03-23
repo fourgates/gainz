@@ -85,7 +85,7 @@ export class NewExerciseComponent implements OnInit {
           set.percentChange = "0";
         }
         else{
-          set.percentChange = (set.prevWeight / (currentWeight  - set.prevWeight)).toFixed(0);
+          set.percentChange = ((currentWeight  - set.prevWeight / set.prevWeight) * 100).toFixed(0);
         }
     });
   }
