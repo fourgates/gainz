@@ -10,3 +10,18 @@ export interface Set{
     percentChange?: string;
     adjustedWeight?: number;
 }
+export interface ExerciseType{
+    exerciseId: number;
+    userId: number
+    description: string;
+    setTypes: SetType[];
+}
+export interface SetType{
+    setTypeId: number;
+    userId: number
+    sets: SetRep[];
+}
+export interface SetRep{
+    set: number;
+    rep: number;
+}

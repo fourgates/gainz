@@ -12,8 +12,9 @@
         </select> -->
         <button mat-button [matMenuTriggerFor]="menu">Exercise</button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>Box Squat</button>
-            <button mat-menu-item>Bench</button>
+            <button mat-menu-item *ngFor="let type of exerciseTypes">
+              {{type.description}}
+            </button>
         </mat-menu>
         <button mat-button (click)="addNewExercise()"> New Exercise</button>
         <button mat-button> New Set Type</button>
