@@ -2,20 +2,22 @@
 <div id="exercise-selection" class="row">
   <span id="exercise-selection-filters" class="col-12">
       <mat-toolbar>
-        <!-- <select id="exercise">
-        <option value="box-squat">Box Squat</option>
-        <option value="bench">Bench</option>
-        </select>
-        <select id="set">
-        <option value="1">5,4,3,2,1</option>
-        <option value="2">5,5,5,5,5</option>
-        </select> -->
         <button mat-button [matMenuTriggerFor]="menu">Exercise</button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item *ngFor="let type of exerciseTypes">
+            <button mat-menu-item *ngFor="let type of exerciseTypes" (click)="selectExerciseType(type)">
               {{type.description}}
             </button>
         </mat-menu>
+        <ng-container *ngIf="currentExerciseType">
+            <button mat-button [matMenuTriggerFor]="setMenu">
+                Set Type
+              </button>
+              <mat-menu #setMenu="matMenu" >
+                  <button mat-menu-item *ngFor="let setType of currentExerciseType.setTypes">
+                    {{setType.description}}
+                  </button>
+              </mat-menu>
+        </ng-container>
         <button mat-button (click)="addNewExercise()"> New Exercise</button>
         <button mat-button> New Set Type</button>
       </mat-toolbar>

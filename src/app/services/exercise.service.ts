@@ -11,6 +11,7 @@ export class ExerciseService {
     getExerciseTypes(userId: number):Observable<ExerciseType[]>{
         let fiveToOne: SetType = {
             setTypeId: 1,
+            description: '5, 4, 3, 2, 1',
             userId: 1,
             sets: [
                 {set: 1, rep: 5},
@@ -22,6 +23,7 @@ export class ExerciseService {
         }
         let threeByThree: SetType = {
             setTypeId: 2,
+            description: '3, 3, 3',
             userId: 1,
             sets: [
                 {set: 1, rep: 3},
@@ -39,7 +41,7 @@ export class ExerciseService {
             exerciseId: 345,
             userId: 1,
             description: "Bench",
-            setTypes: [fiveToOne, threeByThree]
+            setTypes: [threeByThree]
         }
         return of([boxSquat, bench]);
     }

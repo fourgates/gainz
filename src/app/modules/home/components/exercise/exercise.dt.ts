@@ -18,6 +18,7 @@ export interface ExerciseType{
 }
 export interface SetType{
     setTypeId: number;
+    description: string;
     userId: number
     sets: SetRep[];
 }
