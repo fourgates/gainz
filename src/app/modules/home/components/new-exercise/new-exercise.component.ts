@@ -18,12 +18,10 @@ export class NewExerciseComponent implements OnInit {
   form: FormGroup;// = this.fb.group({ 'currentWeight': null, 'actualRep': null});
   formSetReps: FormArray;
   formSetWeight: FormArray;
+
   // TODO 
-  // 1. use a form array
-  // 2. create a table component. abstract headers and property
-  // 3. exercise needs adjusted weight
-  // 4. create editable table (new-exercise-component) 
-  // 5. implement adjusted weight
+  // 1. create a table component. abstract headers and property
+  // 2. combine exercise & new-exercise
   constructor(private fb: FormBuilder) { 
     this.formSetReps = fb.array([]);
     this.formSetWeight = fb.array([]);
