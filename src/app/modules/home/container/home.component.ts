@@ -14,7 +14,9 @@ export class HomeComponent implements OnInit {
   constructor(private exerciseService: ExerciseService) { }
 
   // TODO - on change of exercise, call service and get diff exercises
-  // TODO 
+  // TODO - get new data on set type change
+  // TODO - create exercise
+  // TODO - create set type
   ngOnInit(): void {
     this.exerciseService.getExercise(123, 234).subscribe(res=>{
       this.boxSquats = res;
