@@ -9,7 +9,8 @@ import { ExerciseService } from 'src/app/services/exercise.service';
   styles: []
 })
 export class HomeComponent implements OnInit {
-  boxSquats: Exercise[] = [];
+  currentExercise: Exercise[] = [];
+  previousExercise: Exercise;
   showNewFlg: boolean;
   constructor(private exerciseService: ExerciseService) { }
 
@@ -19,18 +20,20 @@ export class HomeComponent implements OnInit {
   // TODO - create set type
   ngOnInit(): void {
     this.exerciseService.getExercise(123, 234).subscribe(res=>{
-      this.boxSquats = res;
+      this.currentExercise = res;
     })
-    console.log('box', this.boxSquats);
+    console.log('currentExercise', this.currentExercise);
   }
   addNewExercise(){
-    console.log('add new exercise');
     this.showNewFlg = true;
+    if(this.currentExercise.length > 0){
+      this.previousExercise = this.currentExercise[this.currentExercise.length - 1];
+    }
   }
   saveNewExcercise(newExcercise: Exercise){
     console.log('new', newExcercise);
     // TODO - save
     this.showNewFlg = false;
-    this.boxSquats.push(newExcercise);
+    this.currentExercise.push(newExcercise);
   }
 }
