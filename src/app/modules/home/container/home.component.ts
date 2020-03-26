@@ -18,12 +18,12 @@ export class HomeComponent implements OnInit {
   showNewFlg: boolean;
   constructor(private exerciseService: ExerciseService) { }
 
-  // TODO - on change of exercise, call service and get diff exercises
-  // TODO - get new data on set type change
+  // TODO - dynamically change set types
   // TODO - create exercise
   // TODO - create set type
+  // TODO - fix horizontal scroll
   ngOnInit(): void {
-    this.exerciseService.getExercise(123, 234).subscribe(res=>{
+    this.exerciseService.getExercise(123).subscribe(res=>{
       this.currentExercise = res;
     })
     this.exerciseService.getExerciseTypes(123).subscribe(res=>{
@@ -42,6 +42,9 @@ export class HomeComponent implements OnInit {
     this.currentExerciseType = type;
     console.log('this.currentExerciseType', this.currentExerciseType);
     this.currentSetType = this.allSetTypes[0];
+    this.exerciseService.getExercise(type.exerciseId).subscribe(res=>{
+      this.currentExercise = res;
+    })
   }
   addNewExercise(){
     this.showNewFlg = true;
