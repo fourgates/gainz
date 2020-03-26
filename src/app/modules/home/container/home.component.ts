@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   exerciseTypes: ExerciseType[] = [];
   currentExerciseType: ExerciseType;
   currentSetType: SetType;
+  allSetTypes: SetType[] = [];
   currentExercise: Exercise[] = [];
   previousExercise: Exercise;
   showNewFlg: boolean;
@@ -31,12 +32,16 @@ export class HomeComponent implements OnInit {
         this.currentExerciseType = res[0];
       }
     })
+    this.exerciseService.getSetTypes().subscribe(res=>{
+      this.allSetTypes = res;
+      this.currentSetType = res[0];
+    })
     console.log('currentExercise', this.currentExercise);
   }
   selectExerciseType(type: ExerciseType){
     this.currentExerciseType = type;
     console.log('this.currentExerciseType', this.currentExerciseType);
-    this.currentSetType = this.currentExerciseType.setTypes[0];
+    this.currentSetType = this.allSetTypes[0];
   }
   addNewExercise(){
     this.showNewFlg = true;

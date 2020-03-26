@@ -14,7 +14,6 @@ export interface ExerciseType{
     exerciseId: number;
     userId: number
     description: string;
-    setTypes: SetType[];
 }
 export interface SetType{
     setTypeId: number;

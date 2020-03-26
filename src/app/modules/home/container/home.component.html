@@ -13,7 +13,7 @@
                 Set Type
               </button>
               <mat-menu #setMenu="matMenu" >
-                  <button mat-menu-item *ngFor="let setType of currentExerciseType.setTypes">
+                  <button mat-menu-item *ngFor="let setType of allSetTypes">
                     {{setType.description}}
                   </button>
               </mat-menu>
@@ -22,6 +22,9 @@
         <button mat-button> New Set Type</button>
       </mat-toolbar>
   </span>
+</div>
+<div class="page-content"  style="padding:20px">
+  <h2>{{currentExerciseType.description}} - {{currentSetType.description}}</h2>
 </div>
 <div class="page-content row" style="padding:20px">
     <app-exercise *ngFor="let e of currentExercise" [exercise]="e" class="col-4"></app-exercise>
