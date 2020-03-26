@@ -31,6 +31,7 @@ export class NewExerciseComponent implements OnInit {
     this.newExercise = {sets: []}
     this.exercise.sets.forEach(set=>{
       let current: Set = {
+          setTypeId: set.setTypeId,
           setNumber: set.setNumber,
           prevWeight: set.currentWeight,
           expectedRep: set.expectedRep,
@@ -97,6 +98,7 @@ export class NewExerciseComponent implements OnInit {
     let out: Exercise =  {sets: []};
     this.exercise.sets.forEach((previousSet, i)=>{
       let current: Set = {
+          setTypeId: previousSet.setTypeId,
           setNumber: previousSet.setNumber,
           prevWeight: previousSet.currentWeight,
           currentWeight: weights[i],

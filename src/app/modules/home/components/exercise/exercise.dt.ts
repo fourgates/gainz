@@ -2,6 +2,7 @@ export interface Exercise{
     sets: Set[]
 }
 export interface Set{
+    setTypeId: number;
     setNumber: number;
     prevWeight: number;
     currentWeight?: number;
