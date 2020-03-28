@@ -28,9 +28,11 @@ export class NewExerciseComponent implements OnInit {
   }
   displayedColumns: string[] = ['setNumber', 'prevWeight', 'currentWeight', 'expectedRep', 'actualRep', 'adjustedWeight', 'percentChange'];
   ngOnInit(): void {
-    this.newExercise = {sets: []}
+    this.newExercise = {exerciseId: this.exercise.exerciseId,
+       setTypeId: this.exercise.setTypeId, sets: []};
     this.exercise.sets.forEach(set=>{
       let current: Set = {
+          exerciseId: this.newExercise.exerciseId,
           setTypeId: set.setTypeId,
           setNumber: set.setNumber,
           prevWeight: set.currentWeight,
@@ -99,9 +101,11 @@ export class NewExerciseComponent implements OnInit {
     let reps: [] = this.formSetReps.value;
     let weights: [] = this.formSetWeight.value;
 
-    let out: Exercise =  {sets: []};
+    let out: Exercise =  {exerciseId: this.exercise.exerciseId,
+       setTypeId: this.exercise.setTypeId, sets: []};
     this.exercise.sets.forEach((previousSet, i)=>{
       let current: Set = {
+          exerciseId: this.exercise.exerciseId,
           setTypeId: previousSet.setTypeId,
           setNumber: previousSet.setNumber,
           prevWeight: previousSet.currentWeight,

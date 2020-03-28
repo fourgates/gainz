@@ -5,17 +5,22 @@ import { Exercise, ExerciseType, SetType } from '../modules/home/components/exer
 @Injectable({
     providedIn: 'root',
 })
+// TODO - setup either posgres or mongo
+// TODO - setup express.js
+// TODO - integrate getSetTypes
 export class ExerciseService {
     constructor() { }
 
+    boxSquatId = 123;
+    benchId = 345;
     getExerciseTypes(userId: number):Observable<ExerciseType[]>{
         let boxSquat: ExerciseType = {
-            exerciseId: 123,
+            exerciseId: this.boxSquatId,
             userId: 1,
             description: "Box Squat",
         }
         let bench: ExerciseType = {
-            exerciseId: 345,
+            exerciseId: this.benchId,
             userId: 1,
             description: "Bench",
         }
@@ -23,7 +28,7 @@ export class ExerciseService {
     }
     getSetTypes(): Observable<SetType[]>{
         let fiveToOne: SetType = {
-            setTypeId: 1,
+            setTypeId: this.fiveToOneId,
             description: '5, 4, 3, 2, 1',
             userId: 1,
             sets: [
@@ -35,7 +40,7 @@ export class ExerciseService {
             ]
         }
         let threeByThree: SetType = {
-            setTypeId: 2,
+            setTypeId: this.threeToThreeId,
             description: '3, 3, 3',
             userId: 1,
             sets: [
@@ -46,42 +51,57 @@ export class ExerciseService {
         }
         return of([fiveToOne, threeByThree]);
     }
-    getExercise(exerciseId: number): Observable<Exercise[]>{
-        if(exerciseId === 123){
-            let out: Exercise[] = [];
-            for(let i=0;i<3;i++){
-                let exercise = {sets: []};
-                for(let x=0;x<5;x++){
-                  let set = {
-                    setNumber: x + 1,
-                    prevWeight: 100,
-                    currentWeight: 110,
-                    expectedRep: 5 - x,
-                    actualRep: 5 - x
-                  };
-                  exercise.sets.push(set);
-                }
-                out.push(exercise);
-              }
-            return of(out);
+    fiveToOneId = 111;
+    threeToThreeId = 333;
+    getExercise(exerciseId: number, setTypeId: number): Observable<Exercise[]>{
+        let out: Exercise[] = [];
+        for(let i=0;i<3;i++){
+            let exercise = {exerciseId: this.boxSquatId,
+                 setTypeId:this.fiveToOneId, sets: []};
+            for(let x=0;x<5;x++){
+              let set = {
+                setNumber: x + 1,
+                prevWeight: 100,
+                currentWeight: 110,
+                expectedRep: 5 - x,
+                actualRep: 5 - x
+              };
+              exercise.sets.push(set);
+            }
+            out.push(exercise);
         }
-        else if(exerciseId === 345){
-            let out: Exercise[] = [];
-            for(let i=0;i<3;i++){
-                let exercise = {sets: []};
-                for(let x=0;x<3;x++){
-                  let set = {
-                    setNumber: x + 1,
-                    prevWeight: 50,
-                    currentWeight: 60,
-                    expectedRep: 3 - x,
-                    actualRep: 3 - x
-                  };
-                  exercise.sets.push(set);
-                }
-                out.push(exercise);
-              }
-            return of(out);
+        for(let i=0;i<3;i++){
+            let exercise = {exerciseId:this.boxSquatId,
+                 setTypeId:this.threeToThreeId, sets: []};
+            for(let x=0;x<3;x++){
+              let set = {
+                setNumber: x + 1,
+                prevWeight: 150,
+                currentWeight: 175,
+                expectedRep: 3 - x,
+                actualRep: 3 - x
+              };
+              exercise.sets.push(set);
+            }
+            out.push(exercise);
         }
+        for(let i=0;i<3;i++){
+            let exercise = {exerciseId: this.benchId,
+                    setTypeId:this.threeToThreeId, sets: []};
+            for(let x=0;x<3;x++){
+                let set = {
+                setNumber: x + 1,
+                prevWeight: 50,
+                currentWeight: 60,
+                expectedRep: 3 - x,
+                actualRep: 3 - x
+                };
+                exercise.sets.push(set);
+            }
+            out.push(exercise);
+        }
+        let filtered = out.filter(e=>e.setTypeId === setTypeId && e.exerciseId === exerciseId);
+        console.log('filtered', filtered);
+        return of(filtered);
     }
 }

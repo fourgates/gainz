@@ -13,13 +13,14 @@
                 Set Type
               </button>
               <mat-menu #setMenu="matMenu" >
-                  <button mat-menu-item *ngFor="let setType of allSetTypes">
+                  <button mat-menu-item *ngFor="let setType of allSetTypes" (click)="selectSetType(setType)">
                     {{setType.description}}
                   </button>
               </mat-menu>
         </ng-container>
-        <button mat-button (click)="addNewExercise()"> New Exercise</button>
-        <button mat-button> New Set Type</button>
+        <button mat-button (click)="addNewExercise()"> Add New Set</button>
+        <button mat-button> Create New Set Type</button>
+        <button mat-button> Create New Exercise</button>
       </mat-toolbar>
   </span>
 </div>
