@@ -1,7 +1,10 @@
 export interface Exercise{
+    exerciseId: number;
+    setTypeId: number;
     sets: Set[]
 }
 export interface Set{
+    exerciseId: number;
     setTypeId: number;
     setNumber: number;
     prevWeight: number;
