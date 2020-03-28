@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Exercise, ExerciseType, SetType } from '../modules/home/components/exercise/exercise.dt';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -9,11 +10,16 @@ import { Exercise, ExerciseType, SetType } from '../modules/home/components/exer
 // TODO - setup express.js
 // TODO - integrate getSetTypes
 export class ExerciseService {
-    constructor() { }
+    constructor(private http: HttpClient) { }
 
     boxSquatId = 123;
     benchId = 345;
+    urlConfig = 'http://localhost:3000/';
+
     getExerciseTypes(userId: number):Observable<ExerciseType[]>{
+        this.http.get('http://localhost:3000/users').subscribe(res=>{
+            console.log('res', res);
+        })
         let boxSquat: ExerciseType = {
             exerciseId: this.boxSquatId,
             userId: 1,
