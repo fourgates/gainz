@@ -22,16 +22,18 @@ export class HomeComponent implements OnInit {
   // TODO - create set type
   // TODO - fix horizontal scroll
   ngOnInit(): void {
-    this.exerciseService.getSetTypes().subscribe(res=>{
-      this.allSetTypes = res;
-      this.currentSetType = res[0];
-      this.exerciseService.getExerciseTypes(123).subscribe(res=>{
-        this.exerciseTypes = res;
-        if(res && res.length > 0){
-          this.currentExerciseType = res[0];
+    this.exerciseService.getSetTypes().subscribe(res1=>{
+      console.log('this.allSetTypes', this.allSetTypes);
+      this.allSetTypes = res1;
+      this.currentSetType = res1[0];
+      this.exerciseService.getExerciseTypes(123).subscribe(res2=>{
+        this.exerciseTypes = res2;
+        if(res2 && res2.length > 0){
+          this.currentExerciseType = res2[0];
         }
-        this.exerciseService.getExercise(this.currentExerciseType.exerciseId,this.currentSetType.setTypeLk).subscribe(res=>{
-          this.currentExercise = res;
+        this.exerciseService.getExercise(this.currentExerciseType.exerciseId,this.currentSetType.setTypeLk)
+        .subscribe(res3=>{
+          this.currentExercise = res3;
         })
       })
     })

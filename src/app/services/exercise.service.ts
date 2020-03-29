@@ -32,30 +32,10 @@ export class ExerciseService {
         return of([boxSquat, bench]);
     }
     getSetTypes(): Observable<SetType[]>{
-        this.http.get('http://localhost:3000/lk-set-types').subscribe(res=>{
-            console.log('res', res);
+        this.http.get<SetType[]>(this.urlConfig + 'exercise').subscribe(res=>{
+            console.log('res123', res);
         })
-        let fiveToOne: SetType = {
-            setTypeLk: this.fiveToOneLk,
-            description: '5, 4, 3, 2, 1',
-            sets: [
-                {set: 1, rep: 5},
-                {set: 2, rep: 4},
-                {set: 3, rep: 3},
-                {set: 4, rep: 2},
-                {set: 5, rep: 1},
-            ]
-        }
-        let threeByThree: SetType = {
-            setTypeLk: this.threeToThreeLk,
-            description: '3, 3, 3',
-            sets: [
-                {set: 1, rep: 3},
-                {set: 2, rep: 3},
-                {set: 3, rep: 3},
-            ]
-        }
-        return of([fiveToOne, threeByThree]);
+        return this.http.get<SetType[]>(this.urlConfig + 'lk-set-types');
     }
     fiveToOneLk = "fiveToOne";
     threeToThreeLk = "threeToThree";
