@@ -24,7 +24,7 @@
       </mat-toolbar>
   </span>
 </div>
-<div class="page-content"  style="padding:20px">
+<div *ngIf="currentExerciseType && currentSetType" class="page-content"  style="padding:20px">
   <h2>{{currentExerciseType.description}} - {{currentSetType.description}}</h2>
 </div>
 <div class="page-content row" style="padding:20px">
