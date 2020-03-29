@@ -31,5 +31,5 @@
     <app-exercise *ngFor="let e of currentExercise" [exercise]="e" class="col-4"></app-exercise>
 </div>
 <div class="page-content row" style="padding:20px" *ngIf="showNewFlg">
-    <app-new-exercise [exercise]="currentExercise[2]" (saveExercise)="saveNewExcercise($event)" class="col-4"></app-new-exercise>
+    <app-new-exercise [exercise]="currentExercise[2]" [setType]="currentSetType" (saveExercise)="saveNewExcercise($event)" class="col-4"></app-new-exercise>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Exercise, Set } from '../exercise/exercise.dt';
+import { Exercise, Set, SetType } from '../exercise/exercise.dt';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { debounceTime } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { debounceTime } from 'rxjs/operators';
 export class NewExerciseComponent implements OnInit {
 
   @Input() exercise: Exercise;
+  @Input() setType: SetType;
   @Output() saveExercise = new EventEmitter<Exercise>();
 
   newExercise: Exercise;
@@ -29,11 +30,11 @@ export class NewExerciseComponent implements OnInit {
   displayedColumns: string[] = ['setNumber', 'prevWeight', 'currentWeight', 'expectedRep', 'actualRep', 'adjustedWeight', 'percentChange'];
   ngOnInit(): void {
     this.newExercise = {exerciseId: this.exercise.exerciseId,
-       setTypeId: this.exercise.setTypeId, sets: []};
+       sets: []};
     this.exercise.sets.forEach(set=>{
       let current: Set = {
           exerciseId: this.newExercise.exerciseId,
-          setTypeId: set.setTypeId,
+          setTypeLk: this.setType.setTypeLk,
           setNumber: set.setNumber,
           prevWeight: set.currentWeight,
           expectedRep: set.expectedRep,
@@ -102,11 +103,11 @@ export class NewExerciseComponent implements OnInit {
     let weights: [] = this.formSetWeight.value;
 
     let out: Exercise =  {exerciseId: this.exercise.exerciseId,
-       setTypeId: this.exercise.setTypeId, sets: []};
+       sets: []};
     this.exercise.sets.forEach((previousSet, i)=>{
       let current: Set = {
           exerciseId: this.exercise.exerciseId,
-          setTypeId: previousSet.setTypeId,
+          setTypeLk: this.setType.setTypeLk,
           setNumber: previousSet.setNumber,
           prevWeight: previousSet.currentWeight,
           currentWeight: weights[i],

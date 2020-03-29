@@ -6,8 +6,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
     providedIn: 'root',
 })
-// TODO - setup either posgres or mongo
-// TODO - setup express.js
+
 // TODO - integrate getSetTypes
 export class ExerciseService {
     constructor(private http: HttpClient) { }
@@ -33,10 +32,12 @@ export class ExerciseService {
         return of([boxSquat, bench]);
     }
     getSetTypes(): Observable<SetType[]>{
+        this.http.get('http://localhost:3000/lk-set-types').subscribe(res=>{
+            console.log('res', res);
+        })
         let fiveToOne: SetType = {
-            setTypeId: this.fiveToOneId,
+            setTypeLk: this.fiveToOneLk,
             description: '5, 4, 3, 2, 1',
-            userId: 1,
             sets: [
                 {set: 1, rep: 5},
                 {set: 2, rep: 4},
@@ -46,9 +47,8 @@ export class ExerciseService {
             ]
         }
         let threeByThree: SetType = {
-            setTypeId: this.threeToThreeId,
+            setTypeLk: this.threeToThreeLk,
             description: '3, 3, 3',
-            userId: 1,
             sets: [
                 {set: 1, rep: 3},
                 {set: 2, rep: 3},
@@ -57,56 +57,71 @@ export class ExerciseService {
         }
         return of([fiveToOne, threeByThree]);
     }
-    fiveToOneId = 111;
-    threeToThreeId = 333;
-    getExercise(exerciseId: number, setTypeId: number): Observable<Exercise[]>{
+    fiveToOneLk = "fiveToOne";
+    threeToThreeLk = "threeToThree";
+    exercise1SetId = 10;
+    exercise2SetId = 20;
+    exercise3SetId = 30;
+    getExercise(exerciseId: number, setTypeLk: string): Observable<Exercise[]>{
         let out: Exercise[] = [];
         for(let i=0;i<3;i++){
-            let exercise = {exerciseId: this.boxSquatId,
-                 setTypeId:this.fiveToOneId, sets: []};
+            let exercise: Exercise = {exerciseId: this.boxSquatId, sets: []};
             for(let x=0;x<5;x++){
               let set = {
+                exerciseId: exercise.exerciseId,
+                setTypeId: this.exercise1SetId + i + x,
+                setTypeLk: this.fiveToOneLk,
                 setNumber: x + 1,
                 prevWeight: 100,
                 currentWeight: 110,
                 expectedRep: 5 - x,
                 actualRep: 5 - x
               };
-              exercise.sets.push(set);
+              if(setTypeLk === set.setTypeLk){
+                exercise.sets.push(set);
+              }
             }
             out.push(exercise);
         }
         for(let i=0;i<3;i++){
-            let exercise = {exerciseId:this.boxSquatId,
-                 setTypeId:this.threeToThreeId, sets: []};
+            let exercise: Exercise = {exerciseId:this.boxSquatId, sets: []};
             for(let x=0;x<3;x++){
               let set = {
+                exerciseId: exercise.exerciseId,
+                setTypeId: this.exercise2SetId + i + x,
+                setTypeLk: this.threeToThreeLk,
                 setNumber: x + 1,
                 prevWeight: 150,
                 currentWeight: 175,
                 expectedRep: 3 - x,
                 actualRep: 3 - x
               };
-              exercise.sets.push(set);
+              if(setTypeLk === set.setTypeLk){
+                exercise.sets.push(set);
+              }
             }
             out.push(exercise);
         }
         for(let i=0;i<3;i++){
-            let exercise = {exerciseId: this.benchId,
-                    setTypeId:this.threeToThreeId, sets: []};
+            let exercise : Exercise = {exerciseId: this.benchId, sets: []};
             for(let x=0;x<3;x++){
                 let set = {
+                exerciseId: exercise.exerciseId,
+                setTypeId: this.exercise3SetId + i + x,
+                setTypeLk: this.threeToThreeLk,
                 setNumber: x + 1,
                 prevWeight: 50,
                 currentWeight: 60,
                 expectedRep: 3 - x,
                 actualRep: 3 - x
                 };
-                exercise.sets.push(set);
+                if(setTypeLk === set.setTypeLk){
+                    exercise.sets.push(set);
+                }
             }
             out.push(exercise);
         }
-        let filtered = out.filter(e=>e.setTypeId === setTypeId && e.exerciseId === exerciseId);
+        let filtered = out.filter(e=>e.exerciseId === exerciseId);
         console.log('filtered', filtered);
         return of(filtered);
     }

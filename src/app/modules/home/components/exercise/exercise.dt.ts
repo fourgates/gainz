@@ -1,11 +1,11 @@
 export interface Exercise{
     exerciseId: number;
-    setTypeId: number;
     sets: Set[]
 }
 export interface Set{
     exerciseId: number;
-    setTypeId: number;
+    setTypeId?: number;
+    setTypeLk: string;
     setNumber: number;
     prevWeight: number;
     currentWeight?: number;
@@ -20,9 +20,8 @@ export interface ExerciseType{
     description: string;
 }
 export interface SetType{
-    setTypeId: number;
+    setTypeLk: string;
     description: string;
-    userId: number
     sets: SetRep[];
 }
 export interface SetRep{

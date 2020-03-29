@@ -18,7 +18,6 @@ export class HomeComponent implements OnInit {
   showNewFlg: boolean;
   constructor(private exerciseService: ExerciseService) { }
 
-  // TODO - dynamically change set types
   // TODO - create exercise
   // TODO - create set type
   // TODO - fix horizontal scroll
@@ -31,7 +30,7 @@ export class HomeComponent implements OnInit {
         if(res && res.length > 0){
           this.currentExerciseType = res[0];
         }
-        this.exerciseService.getExercise(this.currentExerciseType.exerciseId,this.currentSetType.setTypeId).subscribe(res=>{
+        this.exerciseService.getExercise(this.currentExerciseType.exerciseId,this.currentSetType.setTypeLk).subscribe(res=>{
           this.currentExercise = res;
         })
       })
@@ -44,14 +43,14 @@ export class HomeComponent implements OnInit {
     if(!this.currentSetType){
       this.currentSetType = this.allSetTypes[0];
     }
-    this.exerciseService.getExercise(type.exerciseId, this.currentSetType.setTypeId).subscribe(res=>{
+    this.exerciseService.getExercise(type.exerciseId, this.currentSetType.setTypeLk).subscribe(res=>{
       this.currentExercise = res;
     })
   }
   selectSetType(type: SetType){
     this.currentSetType = type;
     this.exerciseService.getExercise(this.currentExerciseType.exerciseId, 
-      this.currentSetType.setTypeId).subscribe(res=>{
+      this.currentSetType.setTypeLk).subscribe(res=>{
       this.currentExercise = res;
     })
   }
