@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
     providedIn: 'root',
 })
 
-// TODO - integrate getSetTypes
 export class ExerciseService {
     constructor(private http: HttpClient) { }
 
@@ -19,14 +18,6 @@ export class ExerciseService {
         return this.http.get<ExerciseType[]>(this.urlConfig + 'exercise/types');
     }
     getSetTypes(): Observable<SetType[]>{
-        // exercise type endpoint
-        this.http.get<SetType[]>(this.urlConfig + 'exercise/types').subscribe(res=>{
-            console.log('res123', res);
-        })
-        // exercise endpoint
-        this.http.get<SetType[]>(this.urlConfig + 'exercise/1/threeToThree').subscribe(res=>{
-            console.log('res456', res);
-        })
         return this.http.get<SetType[]>(this.urlConfig + 'lk-set-types');
     }
     getExercise(exerciseId: number, setTypeLk: string): Observable<Exercise[]>{
