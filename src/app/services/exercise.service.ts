@@ -23,4 +23,8 @@ export class ExerciseService {
     getExercise(exerciseId: number, setTypeLk: string): Observable<Exercise[]>{
         return this.http.get<Exercise[]>(this.urlConfig + `exercise/${exerciseId}/${setTypeLk}`);
     }
+    saveUserSet(exercise: Exercise):Observable<Exercise>{
+        // TODO - set seqno
+        return this.http.post<Exercise>(this.urlConfig + `exercise`, exercise);
+    }
 }

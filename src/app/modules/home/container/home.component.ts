@@ -65,7 +65,9 @@ export class HomeComponent implements OnInit {
   saveNewExcercise(newExcercise: Exercise){
     console.log('new', newExcercise);
     // TODO - save
-    this.showNewFlg = false;
-    this.currentExercise.push(newExcercise);
+    this.exerciseService.saveUserSet(newExcercise).subscribe(res=>{
+      this.showNewFlg = false;
+      this.currentExercise.push(newExcercise);
+    })
   }
 }

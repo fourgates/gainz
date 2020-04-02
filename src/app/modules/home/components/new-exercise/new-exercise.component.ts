@@ -113,6 +113,7 @@ export class NewExerciseComponent implements OnInit {
           currentWeight: weights[i],
           expectedRep: previousSet.expectedRep,
           actualRep: reps[i],
+          adjustedWeight: this.newExercise.sets[i].adjustedWeight // this doesnt seem right
       };
       out.sets.push(current);
     })
