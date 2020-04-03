@@ -28,9 +28,10 @@
   <h2>{{currentExerciseType.description}} - {{currentSetType.description}}</h2>
 </div>
 <div class="page-content row" style="padding:20px">
-    <app-exercise *ngFor="let e of currentExercise" [exercise]="e" class="col-4"></app-exercise>
-</div>
-<div class="page-content row" style="padding:20px" *ngIf="showNewFlg">
-    <!-- fix this hard code-->
-    <app-new-exercise [exercise]="currentExercise[0]" [setType]="currentSetType" (saveExercise)="saveNewExcercise($event)" class="col-4"></app-new-exercise>
-</div>
+  <ng-container *ngFor="let e of currentExercise">
+      <span class="col-4">
+          <!-- TODO - change component name-->
+          <app-new-exercise [exercise]="e" [setType]="currentSetType" (saveExercise)="saveNewExcercise($event)"></app-new-exercise>
+      </span>
+  </ng-container>
+  </div>
