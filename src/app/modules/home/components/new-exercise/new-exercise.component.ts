@@ -6,7 +6,13 @@ import { debounceTime } from 'rxjs/operators';
 @Component({
   selector: 'app-new-exercise',
   templateUrl: './new-exercise.component.html',
-  styles: []
+  styles: [`
+    .mat-input-element:disabled, 
+    .mat-form-field-type-mat-native-select.mat-form-field-disabled 
+    .mat-form-field-infix::after {
+      color: darkolivegreen;
+    }
+`]
 })
 export class NewExerciseComponent implements OnInit {
 
@@ -25,18 +31,33 @@ export class NewExerciseComponent implements OnInit {
   // 1. create a table component. abstract headers and property
   // 2. combine exercise & new-exercise
   constructor(private fb: FormBuilder) { 
-    this.formSetReps = fb.array([]);
-    this.formSetWeight = fb.array([]);
   }
   displayedColumns: string[] = ['setNumber', 'prevWeight', 'currentWeight', 'expectedRep', 'actualRep', 'adjustedWeight', 'percentChange'];
   ngOnInit(): void {
-    this.setupNewExercise();
+    this.form = new FormGroup({});
     this.calculatePercentChange();
+    this.initForm();
+  }
+  private initForm(){
+    // create a form array for set and reps since they are editable
+    this.formSetReps = this.fb.array([]);
+    this.formSetWeight = this.fb.array([]);
+    this.exercise.sets.forEach(set=>{
+      this.formSetReps.push(new FormControl(set.actualRep));
+      this.formSetWeight.push(new FormControl(set.currentWeight));
+    })
+
+    // data = data for table
+    this.data = this.exercise.sets;
+
+    // setup form
     this.form = new FormGroup({
       sets: this.formSetReps,
       weights: this.formSetWeight
     });
     this.form.disable();
+
+    // 
     this.form.valueChanges
     .pipe(
         debounceTime(200),
@@ -51,13 +72,6 @@ export class NewExerciseComponent implements OnInit {
     });
     console.log('form', this.form);
   }
-  private setupNewExercise(){
-    this.exercise.sets.forEach(set=>{
-        this.formSetReps.push(new FormControl(set.actualRep));
-        this.formSetWeight.push(new FormControl(set.currentWeight));
-    })
-    this.data = this.exercise.sets;
-  }
 
   // subtract 10lb for every missed rep
   // currentWeight - ((expectedRep - actualRep) * 10)
@@ -70,7 +84,6 @@ export class NewExerciseComponent implements OnInit {
         set.adjustedWeight = (currentWeight - ((set.expectedRep - actualRep) * 10));
       }
     })
-    console.log('adjusted weights', this.exercise);
   }
   calculatePercentChange(){
     this.exercise.sets.forEach((set, i)=>{
@@ -116,6 +129,7 @@ export class NewExerciseComponent implements OnInit {
     this.saveExercise.emit(out);
   }
   cancel(){
+    this.initForm();
     this.form.disable();
   }
   get sets(): FormArray { return this.form.get('sets') as FormArray; }

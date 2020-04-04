@@ -13,8 +13,7 @@
         <ng-container matColumnDef="currentWeight" formArrayName="weights">
             <th mat-header-cell *matHeaderCellDef> Current Weight </th>
             <td mat-cell *matCellDef="let element; let i = index">
-                <input *ngIf="!form.disabled" matInput [formControlName]="i" style="width:50%">
-                <span *ngIf="form.disabled"> {{element.currentWeight}} </span>
+                <input matInput [formControlName]="i" style="width:50%">
             </td>
         </ng-container>
     
@@ -26,8 +25,7 @@
         <ng-container matColumnDef="actualRep" formArrayName="sets">
             <th mat-header-cell *matHeaderCellDef> Actual Rep </th>
             <td mat-cell *matCellDef="let element; let i = index"> 
-                <input *ngIf="!form.disabled" matInput [formControlName]="i" style="width:50%">
-                <span *ngIf="form.disabled"> {{element.actualRep}} </span>
+                <input matInput [formControlName]="i" style="width:50%">
             </td>
         </ng-container>
 
