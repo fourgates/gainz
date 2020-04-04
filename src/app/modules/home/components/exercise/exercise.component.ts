@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Exercise, Set } from './exercise.dt';
+import { Exercise, UserSet } from './exercise.dt';
 
 @Component({
   selector: 'app-exercise',
@@ -9,7 +9,7 @@ import { Exercise, Set } from './exercise.dt';
 export class ExerciseComponent implements OnInit {
 
   @Input() exercise: Exercise;
-  data: Set[];
+  data: UserSet[];
   // TODO 
   // 3. create a new exercise component
   // 4. create a table component. abstract headers and property
@@ -24,7 +24,7 @@ export class ExerciseComponent implements OnInit {
     this.data = this.exercise.sets;
   }
 
-  calculatePercentChange(set: Set){
+  calculatePercentChange(set: UserSet){
     return (set.prevWeight / (set.currentWeight  - set.prevWeight)).toFixed(0);
   }
 }

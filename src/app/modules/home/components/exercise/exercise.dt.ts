@@ -1,8 +1,10 @@
 export interface Exercise{
     exerciseId: number;
-    sets: Set[]
+    seqno?: number;
+    sets: UserSet[]
 }
-export interface Set{
+export interface UserSet{
+    setId?: number;
     exerciseId: number;
     setTypeId?: number;
     setTypeLk: string;

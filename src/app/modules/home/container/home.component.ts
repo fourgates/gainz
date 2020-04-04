@@ -14,8 +14,6 @@ export class HomeComponent implements OnInit {
   currentSetType: SetType;
   allSetTypes: SetType[] = [];
   currentExercise: Exercise[] = [];
-  previousExercise: Exercise;
-  showNewFlg: boolean;
   constructor(private exerciseService: ExerciseService) { }
 
   // TODO - create exercise
@@ -41,6 +39,26 @@ export class HomeComponent implements OnInit {
     this.exerciseService.getExercise(this.currentExerciseType.exerciseId,
       this.currentSetType.setTypeLk).subscribe(res=>{
       this.currentExercise = res;
+      this.sortExerciseBySeqno();
+      this.calculatePrevWeight();
+    })
+  }
+  calculatePrevWeight(){
+    let current: Exercise;
+    for(let i=0;i<this.currentExercise.length;i++){
+      current = this.currentExercise[i];
+      if(i > 0){
+        let previous: Exercise = this.currentExercise[i-1];
+        previous.sets.forEach((set, x)=>{
+          current.sets[x].prevWeight = set.adjustedWeight;
+        })
+      }
+    }
+    console.log('this.currentExercise', this.currentExercise);
+  }
+  sortExerciseBySeqno(){
+    this.currentExercise = this.currentExercise.sort((a,b)=>{
+      return a.seqno - b.seqno;
     })
   }
   selectExerciseType(type: ExerciseType){
@@ -57,9 +75,8 @@ export class HomeComponent implements OnInit {
   }
   // FIXME
   addNewExercise(){
-    this.showNewFlg = true;
     if(this.currentExercise.length > 0){
-      this.previousExercise = this.currentExercise[this.currentExercise.length - 1];
+      //this.previousExercise = this.currentExercise[this.currentExercise.length - 1];
     }
   }
   // TODO - setup new exercise and pus using this.previous exercise
@@ -85,10 +102,8 @@ export class HomeComponent implements OnInit {
 
   saveNewExcercise(newExcercise: Exercise){
     console.log('new', newExcercise);
-    // TODO - save
     this.exerciseService.saveUserSet(newExcercise).subscribe(res=>{
-      this.showNewFlg = false;
-      this.currentExercise.push(newExcercise);
+      this.loadCurrentExercise();
     })
   }
 }

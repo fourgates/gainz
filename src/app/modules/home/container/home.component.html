@@ -31,7 +31,9 @@
   <ng-container *ngFor="let e of currentExercise">
       <span class="col-4">
           <!-- TODO - change component name-->
-          <app-new-exercise [exercise]="e" [setType]="currentSetType" (saveExercise)="saveNewExcercise($event)"></app-new-exercise>
+          <app-new-exercise [exercise]="e" [setType]="currentSetType" 
+            (saveExercise)="saveNewExcercise($event)" (calculatePrevWeight)="calculatePrevWeight()">
+          </app-new-exercise>
       </span>
   </ng-container>
   </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Exercise, Set, SetType } from '../exercise/exercise.dt';
-import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { Exercise, UserSet, SetType } from '../exercise/exercise.dt';
+import { FormBuilder, FormGroup, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { debounceTime } from 'rxjs/operators';
 @Component({
@@ -20,8 +20,10 @@ export class NewExerciseComponent implements OnInit {
   @Input() setType: SetType;
   @Output() saveExercise = new EventEmitter<Exercise>();
   @Output() cancelExercise = new EventEmitter<Exercise>();
+  @Output() reorderExercise = new EventEmitter<Exercise>();
+  @Output() calculatePrevWeight = new EventEmitter<Exercise>();
 
-  data: Set[];
+  data: UserSet[];
   form: FormGroup;// = this.fb.group({ 'currentWeight': null, 'actualRep': null});
   formSetReps: FormArray;
   formSetWeight: FormArray;
@@ -53,29 +55,47 @@ export class NewExerciseComponent implements OnInit {
     // setup form
     this.form = new FormGroup({
       sets: this.formSetReps,
-      weights: this.formSetWeight
+      weights: this.formSetWeight,
+      seqno: new FormControl(this.exercise.seqno)
     });
     this.form.disable();
-
-    // 
-    this.form.valueChanges
-    .pipe(
-        debounceTime(200),
-        distinctUntilChanged()
-    )
-    .subscribe({
-        next: (value) => {
-            //use value here
-            this.calculateAdjustedWeight();
-            this.calculatePercentChange();
-        }
-    });
+    this.calculateChange(this.form.get('sets'));
+    this.calculateChange(this.form.get('weights'));
+    this.reorderChange(this.form.get('seqno'));
     console.log('form', this.form);
   }
-
+  private reorderChange(form: AbstractControl){
+    form.valueChanges
+      .pipe(
+          debounceTime(200),
+          distinctUntilChanged()
+      )
+      .subscribe({
+          next: (value) => {
+              // update order of exercises
+              this.exercise.seqno = this.form.get('seqno').value;
+              this.reorderExercise.emit(this.exercise);
+          }
+      });
+  }
+  private calculateChange(form: AbstractControl){
+    form.valueChanges
+      .pipe(
+          debounceTime(200),
+          distinctUntilChanged()
+      )
+      .subscribe({
+          next: (value) => {
+              //use value here
+              this.calculateAdjustedWeight();
+              this.calculatePercentChange();
+              this.calculatePrevWeight.emit(this.exercise);
+          }
+      });
+  }
   // subtract 10lb for every missed rep
   // currentWeight - ((expectedRep - actualRep) * 10)
-  calculateAdjustedWeight(){
+  private calculateAdjustedWeight(){
     this.exercise.sets.forEach((set, i)=>{
       let currentWeight = this.formSetWeight.value[i];
       let actualRep = this.formSetReps.value[i];
@@ -85,7 +105,7 @@ export class NewExerciseComponent implements OnInit {
       }
     })
   }
-  calculatePercentChange(){
+  private calculatePercentChange(){
     this.exercise.sets.forEach((set, i)=>{
       let currentWeight = set.adjustedWeight;
 
@@ -103,22 +123,21 @@ export class NewExerciseComponent implements OnInit {
     });
   }
   save(){
-    console.log('save', this.formSetReps.value);
-    console.log('save', this.formSetWeight.value);
-
     let reps: [] = this.formSetReps.value;
     let weights: [] = this.formSetWeight.value;
 
     let out: Exercise =  {exerciseId: this.exercise.exerciseId,
        sets: []};
     this.exercise.sets.forEach((previousSet, i)=>{
-      let current: Set = {
+      let current: UserSet = {
+          setId: previousSet.setId,
+          setNumber: previousSet.setNumber,
+          prevWeight: previousSet.prevWeight,
+          expectedRep: previousSet.expectedRep,
+
           exerciseId: this.exercise.exerciseId,
           setTypeLk: this.setType.setTypeLk,
-          setNumber: previousSet.setNumber,
-          prevWeight: previousSet.currentWeight,
           currentWeight: weights[i],
-          expectedRep: previousSet.expectedRep,
           actualRep: reps[i],
           adjustedWeight: this.exercise.sets[i].adjustedWeight // this doesnt seem right
       };
