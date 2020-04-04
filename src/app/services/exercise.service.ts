@@ -14,7 +14,7 @@ export class ExerciseService {
     benchId = 345;
     urlConfig = 'http://localhost:3000/';
 
-    getExerciseTypes(userId: number):Observable<ExerciseType[]>{
+    getExerciseTypes():Observable<ExerciseType[]>{
         return this.http.get<ExerciseType[]>(this.urlConfig + 'exercise/types');
     }
     getSetTypes(): Observable<SetType[]>{

@@ -22,22 +22,26 @@ export class HomeComponent implements OnInit {
   // TODO - create set type
   // TODO - fix horizontal scroll
   ngOnInit(): void {
+    this.init();
+  }
+  init(){
     this.exerciseService.getSetTypes().subscribe(res1=>{
-      console.log('this.allSetTypes', this.allSetTypes);
       this.allSetTypes = res1;
       this.currentSetType = res1[0];
-      this.exerciseService.getExerciseTypes(123).subscribe(res2=>{
+      this.exerciseService.getExerciseTypes().subscribe(res2=>{
         this.exerciseTypes = res2;
         if(res2 && res2.length > 0){
           this.currentExerciseType = res2[0];
         }
-        this.exerciseService.getExercise(this.currentExerciseType.exerciseId,this.currentSetType.setTypeLk)
-        .subscribe(res3=>{
-          this.currentExercise = res3;
-        })
+        this.loadCurrentExercise();
       })
     })
-    console.log('currentExercise', this.currentExercise);
+  }
+  loadCurrentExercise(){
+    this.exerciseService.getExercise(this.currentExerciseType.exerciseId,
+      this.currentSetType.setTypeLk).subscribe(res=>{
+      this.currentExercise = res;
+    })
   }
   selectExerciseType(type: ExerciseType){
     this.currentExerciseType = type;
@@ -45,17 +49,13 @@ export class HomeComponent implements OnInit {
     if(!this.currentSetType){
       this.currentSetType = this.allSetTypes[0];
     }
-    this.exerciseService.getExercise(type.exerciseId, this.currentSetType.setTypeLk).subscribe(res=>{
-      this.currentExercise = res;
-    })
+    this.loadCurrentExercise();
   }
   selectSetType(type: SetType){
     this.currentSetType = type;
-    this.exerciseService.getExercise(this.currentExerciseType.exerciseId, 
-      this.currentSetType.setTypeLk).subscribe(res=>{
-      this.currentExercise = res;
-    })
+    this.loadCurrentExercise();
   }
+  // FIXME
   addNewExercise(){
     this.showNewFlg = true;
     if(this.currentExercise.length > 0){
