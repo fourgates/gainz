@@ -136,6 +136,7 @@ export class NewExerciseComponent implements OnInit {
           prevWeight: previousSet.prevWeight,
           expectedRep: previousSet.expectedRep,
 
+          seqno: this.exercise.seqno,
           exerciseId: this.exercise.exerciseId,
           setTypeLk: this.setType.setTypeLk,
           currentWeight: weights[i],

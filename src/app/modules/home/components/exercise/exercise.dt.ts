@@ -8,11 +8,12 @@ export interface UserSet{
     setId?: number;
     exerciseId: number;
     setTypeId?: number;
-    setTypeLk: string;
-    setNumber: number;
-    prevWeight: number;
+    setTypeLk?: string;
+    seqno?: number;
+    setNumber?: number;
+    prevWeight?: number;
     currentWeight?: number;
-    expectedRep: number;
+    expectedRep?: number;
     actualRep?: number;
     percentChange?: string;
     adjustedWeight?: number;

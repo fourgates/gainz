@@ -103,6 +103,7 @@ export class HomeComponent implements OnInit {
           setNumber: set.set,
           prevWeight: 0,
           expectedRep: set.rep,
+          seqno: seqno
         };
         newExercise.sets.push(current);
       })
