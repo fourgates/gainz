@@ -1,5 +1,6 @@
 export interface Exercise{
     exerciseId: number;
+    setTypeLk?: string;
     seqno?: number;
     sets: UserSet[]
 }

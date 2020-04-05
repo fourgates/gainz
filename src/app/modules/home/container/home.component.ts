@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Exercise, ExerciseType, SetType } from '../components/exercise/exercise.dt';
+import { Exercise, ExerciseType, SetType, UserSet } from '../components/exercise/exercise.dt';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
@@ -89,6 +89,29 @@ export class HomeComponent implements OnInit {
   }
   // FIXME
   addNewExercise(){
+    // create a new exercise
+    // increment seqno
+    // create set arry
+    // create sets
+    // 
+    let newExercise: Exercise = {exerciseId: this.currentExerciseType.exerciseId,
+      sets: [], setTypeLk: this.currentSetType.setTypeLk};
+      this.currentSetType.sets.forEach(set=>{
+        let current: UserSet = {
+          exerciseId: newExercise.exerciseId,
+          setTypeLk: newExercise.setTypeLk,
+          setNumber: set.set,
+          prevWeight: 0,
+          expectedRep: set.rep,
+        };
+        newExercise.sets.push(current);
+        // this.formSetReps.push(new FormControl());
+        // this.formSetWeight.push(new FormControl());
+        //this.newExercise.sets.push(current);
+      })
+      this.currentExercise.push(newExercise);
+      this.calculatePrevWeight();
+      console.log('newExercise', newExercise);
     if(this.currentExercise.length > 0){
       //this.previousExercise = this.currentExercise[this.currentExercise.length - 1];
     }
