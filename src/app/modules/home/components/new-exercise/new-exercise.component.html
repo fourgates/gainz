@@ -45,4 +45,5 @@
 </form>
 <button *ngIf="form.disabled" (click)="form.enable()">Edit</button>
 <button *ngIf="form.enabled" (click)="save()">Save</button>
+<button *ngIf="form.enabled" (click)="delete()">Delete</button>
 <button *ngIf="form.enabled" (click)="cancel()">Cancel</button>

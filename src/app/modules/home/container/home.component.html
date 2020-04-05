@@ -32,7 +32,9 @@
       <span class="col-4">
           <!-- TODO - change component name-->
           <app-new-exercise [exercise]="e" [setType]="currentSetType" 
-            (saveExercise)="saveNewExcercise($event)" (calculatePrevWeight)="calculatePrevWeight()">
+            (saveExercise)="saveNewExcercise($event)" 
+            (calculatePrevWeight)="calculatePrevWeight()"
+            (deleteSet)="deleteUserSet($event)">
           </app-new-exercise>
       </span>
   </ng-container>

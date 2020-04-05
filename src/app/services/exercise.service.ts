@@ -18,7 +18,7 @@ export class ExerciseService {
         return this.http.get<ExerciseType[]>(this.urlConfig + 'exercise/types');
     }
     getSetTypes(): Observable<SetType[]>{
-        return this.http.get<SetType[]>(this.urlConfig + 'lk-set-types');
+        return this.http.get<SetType[]>(this.urlConfig + 'sets/lk-set-types');
     }
     getExercise(exerciseId: number, setTypeLk: string): Observable<Exercise[]>{
         return this.http.get<Exercise[]>(this.urlConfig + `exercise/${exerciseId}/${setTypeLk}`);
@@ -26,5 +26,9 @@ export class ExerciseService {
     saveUserSet(exercise: Exercise):Observable<Exercise>{
         // TODO - set seqno
         return this.http.post<Exercise>(this.urlConfig + `exercise`, exercise);
+    }
+    deleteUserSet(exercise: Exercise){
+        return this.http.post<number>(this.urlConfig 
+            + `sets/delete`, exercise);
     }
 }

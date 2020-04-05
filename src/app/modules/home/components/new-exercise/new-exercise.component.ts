@@ -20,6 +20,7 @@ export class NewExerciseComponent implements OnInit {
   @Input() setType: SetType;
   @Output() saveExercise = new EventEmitter<Exercise>();
   @Output() cancelExercise = new EventEmitter<Exercise>();
+  @Output() deleteSet = new EventEmitter<Exercise>();
   @Output() reorderExercise = new EventEmitter<Exercise>();
   @Output() calculatePrevWeight = new EventEmitter<Exercise>();
 
@@ -147,6 +148,9 @@ export class NewExerciseComponent implements OnInit {
     console.log('out', out);
     this.saveExercise.emit(out);
   }
+  delete(){
+    this.deleteSet.emit(this.exercise);
+  } 
   cancel(){
     this.initForm();
     this.form.disable();

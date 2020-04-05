@@ -45,6 +45,11 @@ export class HomeComponent implements OnInit {
   }
   calculatePrevWeight(){
     let current: Exercise;
+    if(this.currentExercise.length == 1){
+      this.currentExercise[0].sets.forEach(set=>{
+        set.prevWeight = 0;
+      })
+    }
     for(let i=0;i<this.currentExercise.length;i++){
       current = this.currentExercise[i];
       if(i > 0){
@@ -72,6 +77,15 @@ export class HomeComponent implements OnInit {
   selectSetType(type: SetType){
     this.currentSetType = type;
     this.loadCurrentExercise();
+  }
+
+  deleteUserSet(exercise: Exercise){
+    console.log('delete user set', exercise);
+    this.exerciseService.deleteUserSet(exercise).subscribe(res=>{
+      let findIndex = this.currentExercise.indexOf(exercise);
+      this.currentExercise.splice(findIndex, 1);
+      this.calculatePrevWeight();
+    })
   }
   // FIXME
   addNewExercise(){
