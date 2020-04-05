@@ -87,15 +87,15 @@ export class HomeComponent implements OnInit {
       this.calculatePrevWeight();
     })
   }
-  // FIXME
-  addNewExercise(){
-    // create a new exercise
-    // increment seqno
-    // create set arry
-    // create sets
-    // 
+  addNewSet(){
+    let seqno = 0;
+    this.currentExercise.forEach(exercise=>{
+      if(exercise.seqno >= seqno){
+        seqno = exercise.seqno + 1;
+      }
+    })
     let newExercise: Exercise = {exerciseId: this.currentExerciseType.exerciseId,
-      sets: [], setTypeLk: this.currentSetType.setTypeLk};
+      sets: [], setTypeLk: this.currentSetType.setTypeLk, seqno: seqno};
       this.currentSetType.sets.forEach(set=>{
         let current: UserSet = {
           exerciseId: newExercise.exerciseId,
@@ -105,37 +105,10 @@ export class HomeComponent implements OnInit {
           expectedRep: set.rep,
         };
         newExercise.sets.push(current);
-        // this.formSetReps.push(new FormControl());
-        // this.formSetWeight.push(new FormControl());
-        //this.newExercise.sets.push(current);
       })
       this.currentExercise.push(newExercise);
       this.calculatePrevWeight();
-      console.log('newExercise', newExercise);
-    if(this.currentExercise.length > 0){
-      //this.previousExercise = this.currentExercise[this.currentExercise.length - 1];
-    }
   }
-  // TODO - setup new exercise and pus using this.previous exercise
-  //        then we can get rid of that class variable
-
-  // private setupNewExercise(){
-  //   this.newExercise = {exerciseId: this.exercise.exerciseId,
-  //     sets: []};
-  //  this.exercise.sets.forEach(set=>{
-  //    let current: Set = {
-  //        exerciseId: this.newExercise.exerciseId,
-  //        setTypeLk: this.setType.setTypeLk,
-  //        setNumber: set.setNumber,
-  //        prevWeight: set.currentWeight,
-  //        expectedRep: set.expectedRep,
-  //    };
-  //    this.formSetReps.push(new FormControl());
-  //    this.formSetWeight.push(new FormControl());
-  //    this.newExercise.sets.push(current);
-  //  })
-  //  this.data = this.newExercise.sets;
-  // }
 
   saveNewExcercise(newExcercise: Exercise){
     console.log('new', newExcercise);
