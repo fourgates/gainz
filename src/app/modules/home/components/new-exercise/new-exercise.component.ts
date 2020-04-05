@@ -59,7 +59,10 @@ export class NewExerciseComponent implements OnInit {
       weights: this.formSetWeight,
       seqno: new FormControl(this.exercise.seqno)
     });
-    this.form.disable();
+    let newSet = this.exercise.sets.find(set=>set.setId == undefined);
+    if(!newSet){
+      this.form.disable();
+    }
     this.calculateChange(this.form.get('sets'));
     this.calculateChange(this.form.get('weights'));
     this.reorderChange(this.form.get('seqno'));
