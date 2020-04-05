@@ -156,8 +156,16 @@ export class NewExerciseComponent implements OnInit {
     this.deleteSet.emit(this.exercise);
   } 
   cancel(){
-    this.initForm();
-    this.form.disable();
+    // check to see if this is a new set, then delete
+    let newSet = this.exercise.sets.findIndex(set=>set.setId === undefined);
+    console.log('newSet', newSet);
+    if(newSet === 0 ){
+      this.deleteSet.emit(this.exercise);
+    }
+    else{
+      this.initForm();
+      this.form.disable();
+    }
   }
   get sets(): FormArray { return this.form.get('sets') as FormArray; }
   get weights(): FormArray { return this.form.get('weights') as FormArray; }
