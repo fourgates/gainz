@@ -59,7 +59,6 @@ export class HomeComponent implements OnInit {
         })
       }
     }
-    console.log('this.currentExercise', this.currentExercise);
   }
   sortExerciseBySeqno(){
     this.currentExercise = this.currentExercise.sort((a,b)=>{
@@ -68,7 +67,6 @@ export class HomeComponent implements OnInit {
   }
   selectExerciseType(type: ExerciseType){
     this.currentExerciseType = type;
-    console.log('this.currentExerciseType', this.currentExerciseType);
     if(!this.currentSetType){
       this.currentSetType = this.allSetTypes[0];
     }
@@ -94,6 +92,7 @@ export class HomeComponent implements OnInit {
         seqno = exercise.seqno + 1;
       }
     })
+    let firstSet = this.currentExercise[0].sets.length === 0;
     let newExercise: Exercise = {exerciseId: this.currentExerciseType.exerciseId,
       sets: [], setTypeLk: this.currentSetType.setTypeLk, seqno: seqno};
       this.currentSetType.sets.forEach(set=>{
@@ -107,7 +106,12 @@ export class HomeComponent implements OnInit {
         };
         newExercise.sets.push(current);
       })
-      this.currentExercise.push(newExercise);
+      if(firstSet){
+        this.currentExercise[0] = newExercise;
+      }
+      else{
+        this.currentExercise.push(newExercise);
+      }
       this.calculatePrevWeight();
   }
 
