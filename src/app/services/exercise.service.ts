@@ -25,7 +25,7 @@ export class ExerciseService {
     }
     saveUserSet(exercise: Exercise):Observable<Exercise>{
         // TODO - set seqno
-        return this.http.post<Exercise>(this.urlConfig + `exercise`, exercise);
+        return this.http.post<Exercise>(this.urlConfig + `exercise/sets`, exercise);
     }
     deleteUserSet(exercise: Exercise){
         return this.http.post<number>(this.urlConfig 
