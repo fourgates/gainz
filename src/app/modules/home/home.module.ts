@@ -5,9 +5,10 @@ import { MaterialModule } from './../../common/material/material.module';
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { NewExerciseComponent } from './components/new-exercise/new-exercise.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NewSetModalComponent } from './components/new-set-modal/new-set-modal.component';
 
 @NgModule({
-  declarations: [HomeComponent, ExerciseComponent, NewExerciseComponent],
+  declarations: [HomeComponent, ExerciseComponent, NewExerciseComponent, NewSetModalComponent],
   exports: [HomeComponent],
   imports: [
     CommonModule,

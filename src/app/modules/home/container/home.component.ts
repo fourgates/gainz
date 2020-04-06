@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Exercise, ExerciseType, SetType, UserSet } from '../components/exercise/exercise.dt';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { MatDialog } from '@angular/material/dialog';
+import { NewSetModalComponent } from '../components/new-set-modal/new-set-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,7 @@ export class HomeComponent implements OnInit {
   currentSetType: SetType;
   allSetTypes: SetType[] = [];
   currentExercise: Exercise[] = [];
-  constructor(private exerciseService: ExerciseService) { }
+  constructor(private exerciseService: ExerciseService, public dialog: MatDialog) { }
 
   // TODO - create exercise
   // TODO - create set type
@@ -120,5 +122,15 @@ export class HomeComponent implements OnInit {
     this.exerciseService.saveUserSet(newExcercise).subscribe(res=>{
       this.loadCurrentExercise();
     })
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(NewSetModalComponent, {
+      width: '300px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('result', result);
+    });
   }
 }
