@@ -31,7 +31,7 @@ export class NewSetModalComponent implements OnInit {
   public dialogRef: MatDialogRef<NewSetModalComponent>) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({exerciseName: 'test'});
+    this.form = this.fb.group({exerciseName: null});
   }
 
   onNoClick(): void {

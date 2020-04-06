@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit {
       this.addMessage("Exercised Saved");
     })
   }
-  openDialog(): void {
+  createExercise(): void {
     const dialogRef = this.dialog.open(NewSetModalComponent, {
       width: '300px',
       data: {}
@@ -135,7 +135,13 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('result', result);
-      this.addMessage(result.exerciseName + " Has Been Created");
+      if(result === undefined){
+        return;
+      }
+      let exercise: Exercise = {description: result.exerciseName};
+      this.exerciseService.createExerciseType(exercise).subscribe(res=>{
+        this.addMessage(result.exerciseName + " Has Been Created");
+      });
     });
   }
   private addMessage(message: string) {

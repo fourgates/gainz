@@ -1,8 +1,9 @@
 export interface Exercise{
-    exerciseId: number;
+    exerciseId?: number;
+    description?: string;
     setTypeLk?: string;
     seqno?: number;
-    sets: UserSet[]
+    sets?: UserSet[]
 }
 export interface UserSet{
     setId?: number;

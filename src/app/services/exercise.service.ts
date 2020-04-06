@@ -31,4 +31,8 @@ export class ExerciseService {
         return this.http.post<number>(this.urlConfig 
             + `sets/delete`, exercise);
     }
+    createExerciseType(exercise: Exercise){
+        return this.http.post<Exercise>(this.urlConfig 
+            + `exercise`, exercise); 
+    }
 }
