@@ -3,6 +3,7 @@ import { Exercise, ExerciseType, SetType, UserSet } from '../components/exercise
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NewSetModalComponent } from '../components/new-set-modal/new-set-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ export class HomeComponent implements OnInit {
   currentSetType: SetType;
   allSetTypes: SetType[] = [];
   currentExercise: Exercise[] = [];
-  constructor(private exerciseService: ExerciseService, public dialog: MatDialog) { }
+  constructor(private exerciseService: ExerciseService, public dialog: MatDialog,
+    private _snackBar: MatSnackBar) { }
 
   // TODO - create exercise
   // TODO - create set type
@@ -85,6 +87,7 @@ export class HomeComponent implements OnInit {
       let findIndex = this.currentExercise.indexOf(exercise);
       this.currentExercise.splice(findIndex, 1);
       this.calculatePrevWeight();
+      this.addMessage("Set has been deleted");
     })
   }
   addNewSet(){
@@ -121,6 +124,7 @@ export class HomeComponent implements OnInit {
     console.log('new', newExcercise);
     this.exerciseService.saveUserSet(newExcercise).subscribe(res=>{
       this.loadCurrentExercise();
+      this.addMessage("Exercised Saved");
     })
   }
   openDialog(): void {
@@ -131,6 +135,12 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('result', result);
+      this.addMessage(result.exerciseName + " Has Been Created");
+    });
+  }
+  private addMessage(message: string) {
+    this._snackBar.open(message, "Close", {
+      duration: 2000,
     });
   }
 }
