@@ -112,9 +112,8 @@ export class NewExerciseComponent implements OnInit {
   private calculatePercentChange(){
     this.exercise.sets.forEach((set, i)=>{
       let currentWeight = set.adjustedWeight;
-
       if(!isNaN(set.prevWeight) && !isNaN(currentWeight))
-        if(currentWeight  - set.prevWeight == 0){
+        if(currentWeight  - set.prevWeight == 0 || set.prevWeight === 0){
           set.percentChange = "0";
         }
         else{
