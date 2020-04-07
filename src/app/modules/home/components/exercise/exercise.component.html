@@ -1,33 +1,54 @@
-<table *ngIf="data" mat-table [dataSource]="data" >
-    <ng-container matColumnDef="setNumber">
-        <th mat-header-cell *matHeaderCellDef> Set # </th>
-        <td mat-cell *matCellDef="let element"> {{element.setNumber}} </td>
-    </ng-container>
+<form *ngIf="data" [formGroup]="form">
+    <!-- <label>
+        Seqno:
+    </label>
+    <input matInput type="number"[formControlName]="'seqno'" style="width:50%"> -->
+    
+    <table mat-table [dataSource]="data" >
+        <ng-container matColumnDef="setNumber">
+            <th mat-header-cell *matHeaderCellDef> Set # </th>
+            <td mat-cell *matCellDef="let element"> {{element.setNumber}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="prevWeight">
+            <th mat-header-cell *matHeaderCellDef> Prev Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.prevWeight}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="currentWeight" formArrayName="weights">
+            <th mat-header-cell *matHeaderCellDef> Current Weight </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <input matInput [formControlName]="i" style="width:50%">
+            </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="expectedRep">
+            <th mat-header-cell *matHeaderCellDef> Expected Rep </th>
+            <td mat-cell *matCellDef="let element"> {{element.expectedRep}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="actualRep" formArrayName="sets">
+            <th mat-header-cell *matHeaderCellDef> Actual Rep </th>
+            <td mat-cell *matCellDef="let element; let i = index"> 
+                <input matInput [formControlName]="i" style="width:50%">
+            </td>
+        </ng-container>
 
-    <ng-container matColumnDef="prevWeight">
-        <th mat-header-cell *matHeaderCellDef> Prev Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.prevWeight}} </td>
-    </ng-container>
+        <ng-container matColumnDef="adjustedWeight">
+            <th mat-header-cell *matHeaderCellDef> Adj. Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.adjustedWeight}}</td>
+        </ng-container>   
 
-    <ng-container matColumnDef="currentWeight">
-        <th mat-header-cell *matHeaderCellDef> Current Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.currentWeight}} </td>
-    </ng-container>
+        <ng-container matColumnDef="percentChange">
+            <th mat-header-cell *matHeaderCellDef> % Change </th>
+            <td mat-cell *matCellDef="let element"> {{element.percentChange}}%</td>
+        </ng-container>
 
-    <ng-container matColumnDef="expectedRep">
-        <th mat-header-cell *matHeaderCellDef> Expected Rep </th>
-        <td mat-cell *matCellDef="let element"> {{element.expectedRep}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actualRep">
-        <th mat-header-cell *matHeaderCellDef> Actual Rep </th>
-        <td mat-cell *matCellDef="let element"> {{element.actualRep}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="percentChange">
-        <th mat-header-cell *matHeaderCellDef> % Change </th>
-        <td mat-cell *matCellDef="let element"> {{element.percentChange}}%</td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</form>
+<button *ngIf="form.disabled" (click)="form.enable()" mat-button>Edit</button>
+<button *ngIf="form.enabled" (click)="save()" mat-button>Save</button>
+<button *ngIf="form.enabled" (click)="delete()" mat-button color="warn">Delete</button>
+<button *ngIf="form.enabled" (click)="cancel()" mat-button>Cancel</button>
