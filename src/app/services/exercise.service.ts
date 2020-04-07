@@ -35,4 +35,8 @@ export class ExerciseService {
         return this.http.post<Exercise>(this.urlConfig 
             + `exercise`, exercise); 
     }
+    deleteExerciseType(exercise: Exercise){
+        return this.http.delete<Exercise>(this.urlConfig 
+            + `exercise/${exercise.exerciseId}`); 
+    }
 }
