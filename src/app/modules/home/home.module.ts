@@ -6,6 +6,7 @@ import { ExerciseComponent } from './components/exercise/exercise.component';
 import { NewExerciseComponent } from './components/new-exercise/new-exercise.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewSetModalComponent } from './components/new-set-modal/new-set-modal.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [HomeComponent, ExerciseComponent, NewExerciseComponent, NewSetModalComponent],
@@ -14,7 +15,8 @@ import { NewSetModalComponent } from './components/new-set-modal/new-set-modal.c
     CommonModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ]
 })
 export class HomeModule { }
