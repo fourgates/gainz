@@ -7,11 +7,12 @@ import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
   exports: [MatButtonModule, MatToolbarModule, MatMenuModule, 
-    MatTableModule, MatInputModule, MatDialogModule, MatSnackBarModule],
+    MatTableModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonToggleModule],
   imports: [
     CommonModule
   ]
