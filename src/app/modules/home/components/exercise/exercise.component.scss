@@ -1,0 +1,35 @@
+.mat-input-element:disabled, 
+.mat-form-field-type-mat-native-select.mat-form-field-disabled 
+.mat-form-field-infix::after {
+  color: grey;
+}
+.button-bar{
+  background-color: grey;
+  height: 53px;
+  padding-top: 5px;
+  padding-left: 6px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  .edit-bar{
+    float:left;
+  }
+  .delete-bar{
+    float:right;
+    padding-right: 6px;
+  }
+}
+.mat-column-setNumber {
+    width: 66px;
+}
+.mat-column-prevWeight {
+    width: 74px;
+}
+.mat-column-currentWeight {
+    width: 81px;
+}
+.mat-column-expectedRep {
+    width: 86px;
+}
+.mat-column-actualRep {
+    width: 86px;
+}
