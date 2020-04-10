@@ -8,6 +8,10 @@ import {HomeModule} from './modules/home/home.module'
 import { MaterialModule } from './common/material/material.module'
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { firebaseConfig } from './firebase.config'
+
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HomeModule,
     MaterialModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
