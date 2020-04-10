@@ -5,32 +5,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewSetModalComponent } from '../components/new-set-modal/new-set-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   providers: [ExerciseService],
-  styles: [`
-    .mat-select-value {color: grey;} 
-    #exercise-icon-container{
-      padding: 20px;
-    }
-    .exercise-icon{
-      font-size: 36px;
-      text-align: center;
-      box-sizing: border-box;
-      border: solid grey 5px;
-      padding: 5px;
-      width: 200px;
-      float: left;
-      margin-right: 24px;
-      cursor: pointer;
-    }
-    #set-menu{
-      clear: both;
-      padding: 20px;  
-    }
-  `]
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
   faDumbbell = faDumbbell;
@@ -40,7 +21,7 @@ export class HomeComponent implements OnInit {
   allSetTypes: SetType[] = [];
   currentExercise: Exercise[] = [];
   constructor(private exerciseService: ExerciseService, public dialog: MatDialog,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar, private authService: AuthService) { }
 
   // TODO - create exercise
   // TODO - create set type
@@ -170,5 +151,8 @@ export class HomeComponent implements OnInit {
     this._snackBar.open(message, "Close", {
       duration: 2000,
     });
+  }
+  logout(){
+    this.authService.logout();
   }
 }

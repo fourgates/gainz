@@ -1,4 +1,6 @@
-<h1>Gainz - Dashboard</h1>
+<div id="header">
+    <h1 class="head">Gainz - Dashboard</h1>
+</div>
 <div id="exercise-selection" class="row">
   <span id="exercise-selection-filters" class="col-12">
       <mat-toolbar>
@@ -8,23 +10,31 @@
         <button mat-button (click)="addNewSet()" *ngIf="currentExerciseType && currentSetType"> Add New Set</button>
         <button mat-button> Create New Set Type</button>
         <button mat-button (click)="createExercise()"> Create New Exercise</button>
+        <button mat-button (click)="logout()"> Logout</button>
       </mat-toolbar>
   </span>
 </div>
 <ng-container *ngIf="currentExerciseType === undefined">
     <div id="exercise-icon-container">
         <div *ngFor="let type of exerciseTypes" class="exercise-icon clickable" (click)="selectExerciseType(type)"> 
-            <span>
+          <div class="card">
+            <div class="header">
                 <fa-icon [icon]="faDumbbell"></fa-icon>
-            </span>
-            <div>
-                {{type.description}}
             </div>
+            <div class="container">
+              <p> {{type.description}}</p>
+            </div>
+          </div>
         </div>
     </div>
 </ng-container>
-<div *ngIf="currentExerciseType && currentSetType" class="page-content"  style="padding:20px">
-  <h2>{{currentExerciseType.description}}</h2>
+<div *ngIf="currentExerciseType && currentSetType" class="page-content">
+  <h2>
+    {{currentExerciseType.description}}
+    <button id="delete-exercise" mat-raised-button color="warn">
+      Delete Exercise
+    </button>
+  </h2>
   <div>
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
         <mat-button-toggle value="bold" *ngFor="let setType of allSetTypes" (click)="selectSetType(setType)">
@@ -33,11 +43,10 @@
       </mat-button-toggle-group>
   </div>
 </div>
-<div class="page-content row" style="padding:20px" 
+<div class="page-content row" 
 *ngIf="currentExercise && currentExercise.length > 0 && currentExercise[0].sets.length > 0">
   <ng-container *ngFor="let e of currentExercise">
       <span class="col-4">
-          <!-- TODO - change component name-->
           <app-exercise [exercise]="e" [setType]="currentSetType" 
             (saveExercise)="saveNewExcercise($event)" 
             (calculatePrevWeight)="calculatePrevWeight()"
