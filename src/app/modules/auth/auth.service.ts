@@ -10,7 +10,7 @@ import { User } from  'firebase';
 export class AuthService {
   user: User;
   constructor(public  afAuth:  AngularFireAuth, public  router:  Router) { 
-    this.afAuth.authState.subscribe(user => {
+    this.afAuth.authState.subscribe((user: User) => {
       if (user){
         this.user = user;
         localStorage.setItem('user', JSON.stringify(this.user));
