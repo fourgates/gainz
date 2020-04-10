@@ -6,13 +6,7 @@ import { debounceTime } from 'rxjs/operators';
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
-  styles: [`
-    .mat-input-element:disabled, 
-    .mat-form-field-type-mat-native-select.mat-form-field-disabled 
-    .mat-form-field-infix::after {
-      color: darkolivegreen;
-    }
-`]
+  styleUrls: ['./exercise.component.scss']
 })
 export class ExerciseComponent implements OnInit {
 
