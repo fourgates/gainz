@@ -1,0 +1,18 @@
+ARG NODE_BUILDER
+
+# Step 1: build project
+FROM $NODE_BUILDER AS builder
+
+# copy src files
+COPY . .
+
+RUN ng build --prod
+
+# Step 2: Use build output from 'builder'
+FROM nginx:stable-alpine
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+WORKDIR /usr/share/nginx/html
+COPY --from=builder /usr/src/app/dist/ .
+EXPOSE 80

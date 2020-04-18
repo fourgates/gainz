@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  # build a node server image to run our code on (docker-compose build node)
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${NODE_BUILDER}
+    container_name: build_node
+  # mount current src files and run on node builder (docker-compose up dev)
+  dev:
+    image: ${NODE_BUILDER}
+    container_name: ${CONTAINER_NAME}
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./src:/usr/src/app/src
+    command: ng serve --host 0.0.0.0 --poll 200
+  # build an deployable image (docker-compose build deploy)
+  # docker run -d -p 80:80 --name gainz-angular 095437649667.dkr.ecr.us-east-1.amazonaws.com/gainz:0.2
+  # i think i need to rebuild this...
+  deploy:
+    build:
+      context: .
+      dockerfile: Dockerfile-Deploy
+      args:
+        NODE_BUILDER: '${NODE_BUILDER}'
+    image: ${DEPLOYMENT_IMAGE}
+    container_name: ${DEPLOYER_CONTAINER_NAME}
+    ports:
+    - 80:80
