@@ -4,7 +4,8 @@
 <div id="exercise-selection" class="row">
   <span id="exercise-selection-filters" class="col-12">
       <mat-toolbar>
-        <button *ngIf="currentExerciseType !== undefined" mat-button (click)="back()">
+        <!-- make this button a diff color so it stands out -->
+        <button *ngIf="currentExerciseType !== undefined || currentRun === true" mat-button (click)="back()">
           Back
         </button>
         <button mat-button (click)="addNewSet()" *ngIf="currentExerciseType && currentSetType"> Add New Set</button>
@@ -14,20 +15,29 @@
       </mat-toolbar>
   </span>
 </div>
-<ng-container *ngIf="currentExerciseType === undefined">
-    <div id="exercise-icon-container">
-        <div *ngFor="let type of exerciseTypes" class="exercise-icon clickable" (click)="selectExerciseType(type)"> 
-          <div class="card">
-            <div class="header">
-                <fa-icon [icon]="faDumbbell"></fa-icon>
-            </div>
-            <div class="container">
-              <p> {{type.description}}</p>
-            </div>
-          </div>
-        </div>
+<div id="exercise-icon-container" *ngIf="currentExerciseType === undefined && currentRun === false">
+  <!-- run -->
+  <div class="exercise-icon clickable" (click)="selectRun()"> 
+    <div class="card">
+      <div class="header">
+          <fa-icon [icon]="faDumbbell"></fa-icon>
+      </div>
+      <div class="container">
+        <p> Run</p>
+      </div>
     </div>
-</ng-container>
+  </div>
+  <div *ngFor="let type of exerciseTypes" class="exercise-icon clickable" (click)="selectExerciseType(type)"> 
+    <div class="card">
+      <div class="header">
+          <fa-icon [icon]="faDumbbell"></fa-icon>
+      </div>
+      <div class="container">
+        <p> {{type.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
 <div *ngIf="currentExerciseType && currentSetType" class="page-content">
   <h2>
     {{currentExerciseType.description}}
@@ -43,6 +53,9 @@
       </mat-button-toggle-group>
   </div>
 </div>
+<div class="page-content row" *ngIf="currentRun">
+  <app-runs></app-runs>
+</div>
 <div class="page-content row" 
 *ngIf="currentExercise && currentExercise.length > 0 && currentExercise[0].sets.length > 0">
   <ng-container *ngFor="let e of currentExercise">
@@ -54,7 +67,4 @@
           </app-exercise>
       </span>
   </ng-container>
-  </div>
-  <div class="page-content row">
-    <app-runs></app-runs>
   </div>

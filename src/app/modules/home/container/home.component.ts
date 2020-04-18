@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   currentSetType: SetType;
   allSetTypes: SetType[] = [];
   currentExercise: Exercise[] = [];
+  currentRun = false;
   constructor(private exerciseService: ExerciseService, public dialog: MatDialog,
     private _snackBar: MatSnackBar, private authService: AuthService) { }
 
@@ -69,6 +70,7 @@ export class HomeComponent implements OnInit {
     })
   }
   selectExerciseType(type: ExerciseType){
+    this.currentRun = false;
     this.currentExerciseType = type;
     if(!this.currentSetType){
       this.currentSetType = this.allSetTypes[0];
@@ -79,7 +81,9 @@ export class HomeComponent implements OnInit {
     this.currentSetType = type;
     this.loadCurrentExercise();
   }
-
+  selectRun(){
+    this.currentRun = true;
+  }
   deleteUserSet(exercise: Exercise){
     console.log('delete user set', exercise);
     this.exerciseService.deleteUserSet(exercise).subscribe(res=>{
@@ -146,6 +150,7 @@ export class HomeComponent implements OnInit {
   back(){
     this.currentExerciseType = undefined; 
     this.currentExercise = undefined
+    this.currentRun = false;
   }
   private addMessage(message: string) {
     this._snackBar.open(message, "Close", {
