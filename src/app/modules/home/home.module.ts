@@ -7,9 +7,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewSetModalComponent } from './components/new-set-modal/new-set-modal.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AdminModule } from '../admin/admin.module';
+import { RunsComponent } from './components/runs/runs.component';
 
 @NgModule({
-  declarations: [HomeComponent, ExerciseComponent, NewSetModalComponent],
+  declarations: [HomeComponent, ExerciseComponent, NewSetModalComponent, RunsComponent],
   exports: [HomeComponent],
   imports: [
     CommonModule,

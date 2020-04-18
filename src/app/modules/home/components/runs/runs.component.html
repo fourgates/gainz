@@ -1,0 +1,25 @@
+<div class="exercise-container">
+    <form [formGroup]="form">
+        <div formArrayName="runs">
+            <div *ngFor="let run of runs.controls; index as i">
+                <div [formGroup]="run">
+                    <label>
+                    Week:
+                    <input type="text" formControlName="week">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="button-bar">
+        <span class="edit-bar">
+            <button *ngIf="form.disabled" (click)="form.enable()" mat-raised-button>Edit</button>
+            <button *ngIf="form.enabled" (click)="cancel()" mat-raised-button style="margin-right: 10px;">Cancel</button>
+            <button *ngIf="form.enabled" (click)="save()" mat-raised-button>Save</button>
+        </span>
+        <span class="delete-bar">
+            <button *ngIf="form.enabled" (click)="delete()" mat-raised-button color="warn">Delete Set</button>
+        </span>
+    </div>
+</div>
