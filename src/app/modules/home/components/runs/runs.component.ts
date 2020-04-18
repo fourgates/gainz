@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 
 @Component({
@@ -33,7 +33,7 @@ export class RunsComponent implements OnInit {
 ];
   displayedColumns: string[] = ['week', 'mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun', 'total', 'mileIncrease', 'percentIncrease', 'max', 'maxIncrease', 'maxPercentIncrease', 'daysTrained'];
   //displayedColumns: string[] = ['week'];
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     let rs = this.data.map(d=>this.fb.group(d));
@@ -46,8 +46,32 @@ export class RunsComponent implements OnInit {
     this.calcIncrease(this.data);
     this.form.disable();
   }
-  get runs(){
+  get runs(): FormArray{
     return this.form.get('runs') as FormArray;
+  }
+  getRuns(): FormArray{
+    return this.form.get('runs') as FormArray;
+  }
+  addRun(){
+    let add =     {
+      week: ['0'],
+      mon: ['0'],
+      tue: ['0'],
+      wed: ['0'],
+      thur: ['0'],
+      fri: ['0'],
+      sat: ['0'],
+      sun: ['0']
+    }
+
+    // add a new run to the form
+    let runs: FormArray = this.getRuns();
+    runs.push(this.fb.group(add));
+
+    // refresh data source
+    let out = [...this.data];
+    out.push(add);
+    this.data = out;
   }
   calcIncrease(rows){
     for(let i=0;i<rows.length;i++){
@@ -105,7 +129,9 @@ export class RunsComponent implements OnInit {
     row.total = total;
     row.daysTrained = daysTrained;
   }
-  cancel(){}
+  cancel(){
+    this.form.disable();
+  }
   delete(){}
   save(){}
 }

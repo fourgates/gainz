@@ -1,4 +1,9 @@
 <div class="exercise-container">
+    <div class="table-header"> 
+        <h2 class="center-text">
+            April
+        </h2>
+    </div>
     <form [formGroup]="form">
         <table mat-table [dataSource]="data" >
             <ng-container matColumnDef="week">
@@ -101,6 +106,7 @@
             <button *ngIf="form.enabled" (click)="save()" mat-raised-button>Save</button>
         </span>
         <span class="delete-bar">
+            <button *ngIf="form.enabled" (click)="addRun()" mat-raised-button>Add Run</button>
             <button *ngIf="form.enabled" (click)="delete()" mat-raised-button color="warn">Delete Set</button>
         </span>
     </div>
