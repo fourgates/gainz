@@ -1,0 +1,65 @@
+.mat-input-element:disabled, 
+.mat-form-field-type-mat-native-select.mat-form-field-disabled 
+.mat-form-field-infix::after {
+  color: grey;
+}
+.button-bar{
+  background-color: grey;
+  height: 53px;
+  padding-top: 5px;
+  padding-left: 6px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  .edit-bar{
+    float:left;
+  }
+  .delete-bar{
+    float:right;
+    padding-right: 6px;
+  }
+}
+.mat-column-week {
+    width: 75px;
+}
+.mat-column-mon {
+  width: 75px;
+}
+.mat-column-tue {
+  width: 75px;
+}
+.mat-column-wed {
+  width: 75px;
+}
+.mat-column-thur {
+  width: 75px;
+}
+.mat-column-fri {
+  width: 75px;
+}
+.mat-column-sat {
+  width: 75px;
+}
+.mat-column-sun {
+  width: 75px;
+}
+.mat-column-total {
+  width: 75px;
+}
+.mat-column-mileIncrease {
+  width: 75px;
+}
+.mat-column-percentIncrease {
+  width: 75px;
+}
+.mat-column-max {
+  width: 75px;
+}
+.mat-column-maxIncrease {
+  width: 75px;
+}
+.mat-column-maxPercentIncrease {
+  width: 75px;
+}
+.mat-column-daysTrained {
+  width: 75px;
+}

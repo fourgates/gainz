@@ -1,15 +1,97 @@
 <div class="exercise-container">
     <form [formGroup]="form">
-        <div formArrayName="runs">
-            <div *ngFor="let run of runs.controls; index as i">
-                <div [formGroup]="run">
-                    <label>
-                    Week:
-                    <input type="text" formControlName="week">
-                    </label>
-                </div>
-            </div>
-        </div>
+        <table mat-table [dataSource]="data" >
+            <ng-container matColumnDef="week">
+                <th mat-header-cell *matHeaderCellDef> Week </th>
+                <td mat-cell *matCellDef="let element"> {{element.week}} </td>
+            </ng-container>
+            <ng-container matColumnDef="mon" formArrayName="runs">
+                <th mat-header-cell *matHeaderCellDef> Mon </th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    <span [formGroup]="runs.controls[i]">
+                        <input type="text" formControlName="mon" style="width:50%">
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="tue" formArrayName="runs">
+                <th mat-header-cell *matHeaderCellDef> Tue </th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    <span [formGroup]="runs.controls[i]">
+                        <input type="text" formControlName="tue" style="width:50%">
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="wed" formArrayName="runs">
+                <th mat-header-cell *matHeaderCellDef> Wed </th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    <span [formGroup]="runs.controls[i]">
+                        <input type="text" formControlName="wed" style="width:50%">
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="thur" formArrayName="runs">
+                <th mat-header-cell *matHeaderCellDef> Thur </th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    <span [formGroup]="runs.controls[i]">
+                        <input type="text" formControlName="thur" style="width:50%">
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="fri" formArrayName="runs">
+                <th mat-header-cell *matHeaderCellDef> Fri </th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    <span [formGroup]="runs.controls[i]">
+                        <input type="text" formControlName="fri" style="width:50%">
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="sat" formArrayName="runs">
+                <th mat-header-cell *matHeaderCellDef> Sat </th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    <span [formGroup]="runs.controls[i]">
+                        <input type="text" formControlName="sat" style="width:50%">
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="sun" formArrayName="runs">
+                <th mat-header-cell *matHeaderCellDef> Sun </th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    <span [formGroup]="runs.controls[i]">
+                        <input type="text" formControlName="sun" style="width:50%">
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total </th>
+                <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+            </ng-container>
+            <ng-container matColumnDef="mileIncrease">
+                <th mat-header-cell *matHeaderCellDef> Mile Increase </th>
+                <td mat-cell *matCellDef="let element"> {{element.mileIncrease}} </td>
+            </ng-container>
+            <ng-container matColumnDef="percentIncrease">
+                <th mat-header-cell *matHeaderCellDef> % Increase </th>
+                <td mat-cell *matCellDef="let element"> {{element.percentIncrease}}%</td>
+            </ng-container>
+            <ng-container matColumnDef="max">
+                <th mat-header-cell *matHeaderCellDef> Max </th>
+                <td mat-cell *matCellDef="let element"> {{element.max}}</td>
+            </ng-container>
+            <ng-container matColumnDef="maxIncrease">
+                <th mat-header-cell *matHeaderCellDef> Max Increase </th>
+                <td mat-cell *matCellDef="let element"> {{element.maxIncrease}}</td>
+            </ng-container>
+            <ng-container matColumnDef="maxPercentIncrease">
+                <th mat-header-cell *matHeaderCellDef> Max % Increase </th>
+                <td mat-cell *matCellDef="let element"> {{element.maxPercentIncrease}}</td>
+            </ng-container>
+            <ng-container matColumnDef="daysTrained">
+                <th mat-header-cell *matHeaderCellDef> Days Trained </th>
+                <td mat-cell *matCellDef="let element"> {{element.daysTrained}}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
     </form>
 
     <div class="button-bar">
