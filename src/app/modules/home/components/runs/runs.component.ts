@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { RunGroup, RunWeek, Run } from './run.dt';
 
 @Component({
   selector: 'app-runs',
@@ -9,34 +10,114 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 export class RunsComponent implements OnInit {
 
   form: FormGroup;
-  data: any[] = [
+  form2: FormGroup;
+  data: RunWeek[] = [
     {
-    week: ['1'],
-    mon: ['1.5'],
-    tue: ['1.5'],
-    wed: ['1.5'],
-    thur: ['1.5'],
-    fri: ['1.5'],
-    sat: ['1.5'],
-    sun: ['1.5']
+    week: 1,
+    mon:{
+      distance: 4,
+      hours: 0,
+      mins: 8,
+      seconds: 0
+    },
+    tue:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    },
+    wed:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    },
+    thur:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    },
+    fri:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    },
+    sat:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    },
+    sun:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    }
   },
   {
-    week: ['2'],
-    mon: ['2.5'],
-    tue: ['2.5'],
-    wed: ['2.5'],
-    thur: ['2.5'],
-    fri: ['0'],
-    sat: ['2.5'],
-    sun: ['2.7']
+    week: 2,
+    mon:{
+      distance: 6,
+      hours: 0,
+      mins: 8,
+      seconds: 0
+    },
+    tue:{
+      distance: 7,
+      hours: 0,
+      mins: 80,
+      seconds: 0
+    },
+    wed:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    },
+    thur:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    },
+    fri:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    },
+    sat:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    },
+    sun:{
+      distance: 6,
+      hours: 0,
+      mins: 60,
+      seconds: 0
+    }
   }
 ];
-  displayedColumns: string[] = ['week', 'mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun', 'total', 'mileIncrease', 'percentIncrease', 'max', 'maxIncrease', 'maxPercentIncrease', 'daysTrained'];
+  displayedColumns: string[] = ['week', 'mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun', 'total', 'mileIncrease', 'percentIncrease', 'max', 'maxIncrease', 
+  'maxPercentIncrease', 'daysTrained', 'someday'];
+  days: string[] = ['mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
+  nonDayColumns: string[] = ['total', 'mileIncrease', 'percentIncrease', 'max', 'maxIncrease', 'maxPercentIncrease', 'daysTrained'];
+  displayedColumns2: string[] = ['week'].concat(this.days).concat(this.nonDayColumns);
+  
   //displayedColumns: string[] = ['week'];
   constructor(private fb: FormBuilder, private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    let rs = this.data.map(d=>this.fb.group(d));
+    this.initForm();
+    let rs = this.data.map(d=>{
+      let runGroup = this.fb.group(d);
+      return runGroup;
+    });
     this.form = this.fb.group({
       runs: this.fb.array(rs)
     });
@@ -46,32 +127,62 @@ export class RunsComponent implements OnInit {
     this.calcIncrease(this.data);
     this.form.disable();
   }
+  initForm(){
+    this.form2 = this.fb.group({
+      // array of runs
+      runs: this.fb.array(this.data.map(d=>{
+        // each run can edit the distance and time for the run on the given day
+        return this.fb.group({
+          week: d.week,
+          mon: this.runToFormGroup(d.mon),
+          tue: this.runToFormGroup(d.tue),
+          wed: this.runToFormGroup(d.wed),
+          thur: this.runToFormGroup(d.thur),
+          fri: this.runToFormGroup(d.fri),
+          sat: this.runToFormGroup(d.sat),
+          sun: this.runToFormGroup(d.sun),
+        });
+      }))
+    });
+    this.form2.disable();
+    console.log('form2', this.form2);
+  }
+  runToFormGroup(run: Run){
+    return this.fb.group({
+      distance: run.distance,
+      hours: run.hours,
+      mins: run.mins,
+      seconds: run.seconds
+    });
+  }
   get runs(): FormArray{
-    return this.form.get('runs') as FormArray;
+    let out = this.form.get('runs') as FormArray;
+    console.log('out', out)
+    return out;
   }
   getRuns(): FormArray{
     return this.form.get('runs') as FormArray;
   }
   addRun(){
-    let add =     {
-      week: ['0'],
-      mon: ['0'],
-      tue: ['0'],
-      wed: ['0'],
-      thur: ['0'],
-      fri: ['0'],
-      sat: ['0'],
-      sun: ['0']
-    }
+    // let add =     {
+    //   week: ['0'],
+    //   mon: ['0'],
+    //   tue: ['0'],
+    //   wed: ['0'],
+    //   thur: ['0'],
+    //   fri: ['0'],
+    //   sat: ['0'],
+    //   sun: ['0']
+    // }
 
-    // add a new run to the form
-    let runs: FormArray = this.getRuns();
-    runs.push(this.fb.group(add));
+    // // add a new run to the form
+    // let runs: FormArray = this.getRuns();
+    // runs.push(this.fb.group(add));
 
-    // refresh data source
-    let out = [...this.data];
-    out.push(add);
-    this.data = out;
+    // // refresh data source
+    // let out = [...this.data];
+    // out.push(add);
+    // this.data = out;
   }
   calcIncrease(rows){
     for(let i=0;i<rows.length;i++){
@@ -86,48 +197,49 @@ export class RunsComponent implements OnInit {
       current.maxPercentIncrease = ((current.maxIncrease / prev.max) * 100).toFixed(2);
     }
   }
-  calcTotal(row){
+  calcTotal(row: RunWeek){
     let total = 0;
     let max = 0;
     let daysTrained = 0;
-    if(row.mon && parseFloat(row.mon) > 0){
-      total += parseFloat(row.mon);
-      max = parseFloat(row.mon) > max ? parseFloat(row.mon) : max;
+    if(row.mon && row.mon.distance > 0){
+      total += row.mon.distance
+      max = row.mon.distance > max ? row.mon.distance : max;
       daysTrained++;
     }
-    if(row.tue && parseFloat(row.tue) > 0){
-      total += parseFloat(row.tue);
-      max = parseFloat(row.tue) > max ? parseFloat(row.tue) : max;
+    if(row.tue && row.tue.distance > 0){
+      total += row.tue.distance;
+      max = row.tue.distance > max ? row.tue.distance : max;
       daysTrained++;
     }
-    if(row.wed && parseFloat(row.wed) > 0){
-      total += parseFloat(row.wed);
-      max = parseFloat(row.wed) > max ? parseFloat(row.wed) : max;
+    if(row.wed && row.wed.distance > 0){
+      total += row.wed.distance;
+      max = row.wed.distance > max ? row.wed.distance : max;
       daysTrained++;
     }
-    if(row.thur && parseFloat(row.thur) > 0){
-      total += parseFloat(row.thur);
-      max = parseFloat(row.thur) > max ? parseFloat(row.thur) : max;
+    if(row.thur && row.thur.distance > 0){
+      total += row.thur.distance;
+      max = row.thur.distance > max ? row.thur.distance : max;
       daysTrained++;
     }
-    if(row.fri && parseFloat(row.fri) > 0){
-      total += parseFloat(row.fri);
-      max = parseFloat(row.fri) > max ? parseFloat(row.fri) : max;
+    if(row.fri && row.fri.distance > 0){
+      total += row.fri.distance;
+      max = row.fri.distance > max ? row.fri.distance : max;
       daysTrained++;
     }
-    if(row.sat && parseFloat(row.sat) > 0){
-      total += parseFloat(row.sat);
-      max = parseFloat(row.sat) > max ? parseFloat(row.sat) : max;
+    if(row.sat && row.sat.distance > 0){
+      total += row.sat.distance;
+      max = row.sat.distance > max ? row.sat.distance : max;
       daysTrained++;
     }
-    if(row.sun && parseFloat(row.sun) > 0){
-      total += parseFloat(row.sun);
-      max = parseFloat(row.sun) > max ? parseFloat(row.sun) : max;
+    if(row.sun && row.sun.distance > 0){
+      total += row.sun.distance;
+      max = row.sun.distance > max ? row.sun.distance : max;
       daysTrained++;
     }
     row.max = max;
     row.total = total;
     row.daysTrained = daysTrained;
+    console.log('row', row);
   }
   cancel(){
     this.form.disable();

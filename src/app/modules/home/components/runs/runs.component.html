@@ -1,101 +1,58 @@
-<div class="exercise-container">
+<div class="exercise-container" style="max-width: 1500px; overflow:auto">
     <div class="table-header"> 
         <h2 class="center-text">
             April
         </h2>
     </div>
-    <form [formGroup]="form">
-        <table mat-table [dataSource]="data" >
-            <ng-container matColumnDef="week">
+    <form [formGroup]="form2">
+        <table mat-table [dataSource]="data">
+            <ng-container matColumnDef="week" formArrayName="runs">
                 <th mat-header-cell *matHeaderCellDef> Week </th>
-                <td mat-cell *matCellDef="let element"> {{element.week}} </td>
-            </ng-container>
-            <ng-container matColumnDef="mon" formArrayName="runs">
-                <th mat-header-cell *matHeaderCellDef> Mon </th>
                 <td mat-cell *matCellDef="let element; let i = index"> 
-                    <span [formGroup]="runs.controls[i]">
-                        <input type="text" formControlName="mon" style="width:50%">
+                    <span [formGroupName]="i">
+                        <input matInput formControlName="week" style="width:50%">
                     </span>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="tue" formArrayName="runs">
-                <th mat-header-cell *matHeaderCellDef> Tue </th>
-                <td mat-cell *matCellDef="let element; let i = index"> 
-                    <span [formGroup]="runs.controls[i]">
-                        <input type="text" formControlName="tue" style="width:50%">
-                    </span>
-                </td>
+            <ng-container *ngFor="let day of days">
+                <span class="week-column" [matColumnDef]="day" formArrayName="runs">
+                    <th mat-header-cell *matHeaderCellDef> {{day}} </th>
+                    <td mat-cell *matCellDef="let element; let i = index"> 
+                        <span [formGroupName]="i">
+                            <div [formGroupName]="day" style="width: 175px">
+                                <mat-form-field class="week-column-field" appearance="fill" style="width:50px">
+                                    <mat-label>Miles</mat-label>
+                                    <input type="number" matInput formControlName="distance" style="width:50px">
+                                </mat-form-field>
+                            </div> 
+                            <div [formGroupName]="day">
+                                <mat-form-field class="week-column-field" appearance="fill" style="width:50px">
+                                    <mat-label>Hours</mat-label>
+                                    <input type="number" matInput formControlName="hours">
+                                </mat-form-field>
+                                <mat-form-field class="week-column-field" appearance="fill"  style="width:50px">
+                                    <mat-label>Mins</mat-label>
+                                    <input type="number" matInput formControlName="mins">
+                                </mat-form-field>
+                                <mat-form-field class="week-column-field" appearance="fill" style="width:50px">
+                                    <mat-label>Sec.</mat-label>
+                                    <input type="number" matInput formControlName="seconds">
+                                </mat-form-field>
+                            </div>
+                        </span>
+                    </td>
+                </span>
             </ng-container>
-            <ng-container matColumnDef="wed" formArrayName="runs">
-                <th mat-header-cell *matHeaderCellDef> Wed </th>
-                <td mat-cell *matCellDef="let element; let i = index"> 
-                    <span [formGroup]="runs.controls[i]">
-                        <input type="text" formControlName="wed" style="width:50%">
-                    </span>
-                </td>
+            <ng-container *ngFor="let column of nonDayColumns">
+                <ng-container [matColumnDef]="column" formArrayName="runs">
+                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                    <td mat-cell *matCellDef="let element; let i = index"> 
+                        <span [formGroupName]="i">{{element[column]}}</span>
+                    </td>
+                </ng-container>
             </ng-container>
-            <ng-container matColumnDef="thur" formArrayName="runs">
-                <th mat-header-cell *matHeaderCellDef> Thur </th>
-                <td mat-cell *matCellDef="let element; let i = index"> 
-                    <span [formGroup]="runs.controls[i]">
-                        <input type="text" formControlName="thur" style="width:50%">
-                    </span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="fri" formArrayName="runs">
-                <th mat-header-cell *matHeaderCellDef> Fri </th>
-                <td mat-cell *matCellDef="let element; let i = index"> 
-                    <span [formGroup]="runs.controls[i]">
-                        <input type="text" formControlName="fri" style="width:50%">
-                    </span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="sat" formArrayName="runs">
-                <th mat-header-cell *matHeaderCellDef> Sat </th>
-                <td mat-cell *matCellDef="let element; let i = index"> 
-                    <span [formGroup]="runs.controls[i]">
-                        <input type="text" formControlName="sat" style="width:50%">
-                    </span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="sun" formArrayName="runs">
-                <th mat-header-cell *matHeaderCellDef> Sun </th>
-                <td mat-cell *matCellDef="let element; let i = index"> 
-                    <span [formGroup]="runs.controls[i]">
-                        <input type="text" formControlName="sun" style="width:50%">
-                    </span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="total">
-                <th mat-header-cell *matHeaderCellDef> Total </th>
-                <td mat-cell *matCellDef="let element"> {{element.total}} </td>
-            </ng-container>
-            <ng-container matColumnDef="mileIncrease">
-                <th mat-header-cell *matHeaderCellDef> Mile Increase </th>
-                <td mat-cell *matCellDef="let element"> {{element.mileIncrease}} </td>
-            </ng-container>
-            <ng-container matColumnDef="percentIncrease">
-                <th mat-header-cell *matHeaderCellDef> % Increase </th>
-                <td mat-cell *matCellDef="let element"> {{element.percentIncrease}}%</td>
-            </ng-container>
-            <ng-container matColumnDef="max">
-                <th mat-header-cell *matHeaderCellDef> Max </th>
-                <td mat-cell *matCellDef="let element"> {{element.max}}</td>
-            </ng-container>
-            <ng-container matColumnDef="maxIncrease">
-                <th mat-header-cell *matHeaderCellDef> Max Increase </th>
-                <td mat-cell *matCellDef="let element"> {{element.maxIncrease}}</td>
-            </ng-container>
-            <ng-container matColumnDef="maxPercentIncrease">
-                <th mat-header-cell *matHeaderCellDef> Max % Increase </th>
-                <td mat-cell *matCellDef="let element"> {{element.maxPercentIncrease}}</td>
-            </ng-container>
-            <ng-container matColumnDef="daysTrained">
-                <th mat-header-cell *matHeaderCellDef> Days Trained </th>
-                <td mat-cell *matCellDef="let element"> {{element.daysTrained}}</td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
         </table>
     </form>
 
