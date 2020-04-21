@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import { RunGroup, RunWeek, Run } from './run.dt';
+import { RunGroup, RunWeek, Run, TableColumn } from './run.dt';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { RunWeekBottomSheetComponent } from '../run-week-bottom-sheet/run-week-bottom-sheet.component';
 
 @Component({
   selector: 'app-runs',
@@ -10,7 +12,6 @@ import { RunGroup, RunWeek, Run } from './run.dt';
 export class RunsComponent implements OnInit {
 
   form: FormGroup;
-  form2: FormGroup;
   data: RunWeek[] = [
     {
     week: 1,
@@ -105,22 +106,64 @@ export class RunsComponent implements OnInit {
 ];
   displayedColumns: string[] = ['week', 'mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun', 'total', 'mileIncrease', 'percentIncrease', 'max', 'maxIncrease', 
   'maxPercentIncrease', 'daysTrained', 'someday'];
-  days: string[] = ['mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
-  nonDayColumns: string[] = ['total', 'mileIncrease', 'percentIncrease', 'max', 'maxIncrease', 'maxPercentIncrease', 'daysTrained'];
-  displayedColumns2: string[] = ['week'].concat(this.days).concat(this.nonDayColumns);
+
+  dayColumns: TableColumn[] = [
+    {
+    property: 'mon',
+    description: 'Mon'
+    },
+    {
+      property: 'tue',
+      description: 'Tue'
+    },
+    {
+      property: 'wed',
+      description: 'Wed'
+    },
+    {
+      property: 'thur',
+      description: 'Thur'
+    },
+    {
+      property: 'fri',
+      description: 'Fri'
+    },
+    {
+      property: 'sat',
+      description: 'Sat'
+    },
+    {
+      property: 'sun',
+      description: 'Sun'
+    },
+  ];
+  days: string[] = this.dayColumns.map(dc=>dc.property);
+  nonDayColumns: TableColumn[] = [
+    {
+      property: 'total',
+      description: 'Total'
+    },
+    {
+      property: 'mileIncrease',
+      description: 'Mile Increase'
+    },
+    {
+      property: 'maxIncrease',
+      description: 'Max Increase'
+    },
+    {
+      property: 'daysTrained',
+      description: 'Days Trained'
+    }
+  ]
+  nonDay: string[] = this.nonDayColumns.map(ndc=>ndc.property);
+  displayedColumns2: string[] = ['week'].concat(this.days).concat(this.nonDay);
   
   //displayedColumns: string[] = ['week'];
-  constructor(private fb: FormBuilder, private changeDetectorRefs: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit(): void {
     this.initForm();
-    let rs = this.data.map(d=>{
-      let runGroup = this.fb.group(d);
-      return runGroup;
-    });
-    this.form = this.fb.group({
-      runs: this.fb.array(rs)
-    });
     
     this.calcTotal(this.data[0]);
     this.calcTotal(this.data[1]);
@@ -128,7 +171,7 @@ export class RunsComponent implements OnInit {
     this.form.disable();
   }
   initForm(){
-    this.form2 = this.fb.group({
+    this.form = this.fb.group({
       // array of runs
       runs: this.fb.array(this.data.map(d=>{
         // each run can edit the distance and time for the run on the given day
@@ -144,8 +187,8 @@ export class RunsComponent implements OnInit {
         });
       }))
     });
-    this.form2.disable();
-    console.log('form2', this.form2);
+    this.form.disable();
+    console.log('form', this.form);
   }
   runToFormGroup(run: Run){
     return this.fb.group({
@@ -191,10 +234,14 @@ export class RunsComponent implements OnInit {
         continue;
       }
       let prev = rows[i-1];
-      current.mileIncrease = (current.total - prev.total).toFixed(2);
-      current.percentIncrease = ((current.mileIncrease / prev.total) * 100).toFixed(2);
-      current.maxIncrease = (current.max - prev.max).toFixed(2);
-      current.maxPercentIncrease = ((current.maxIncrease / prev.max) * 100).toFixed(2);
+      
+      let mileIncrease = (current.total - prev.total);
+      let percentIncrease = ((mileIncrease / prev.total) * 100).toFixed(2);
+      current.mileIncrease = mileIncrease + "(" + percentIncrease + "%)";
+
+      let maxIncrease = (current.max - prev.max);
+      let maxPercentIncrease = ((maxIncrease / prev.max) * 100).toFixed(2);
+      current.maxIncrease = maxIncrease + "(" + maxPercentIncrease + "%)";
     }
   }
   calcTotal(row: RunWeek){
@@ -241,9 +288,15 @@ export class RunsComponent implements OnInit {
     row.daysTrained = daysTrained;
     console.log('row', row);
   }
+  edit(){
+    this.form.enable();
+  }
   cancel(){
     this.form.disable();
   }
   delete(){}
   save(){}
+  openBottomSheet(): void {
+    this._bottomSheet.open(RunWeekBottomSheetComponent);
+  }
 }

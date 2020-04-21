@@ -30,43 +30,40 @@
   }
 }
 .mat-column-week {
-    min-width: 65px;
+    width: 75px;
 }
 .mat-column-mon {
-  width: 75px;
+  width: 60px;
 }
 .mat-column-tue {
-  width: 75px;
+  width: 60px;
 }
 .mat-column-wed {
-  width: 75px;
+  width: 60px;
 }
 .mat-column-thur {
-  width: 75px;
+  width: 60px;
 }
 .mat-column-fri {
-  width: 75px;
+  width: 60px;
 }
 .mat-column-sat {
-  width: 75px;
+  width: 60px;
 }
 .mat-column-sun {
-  width: 75px;
+  width: 60px;
 }
 .mat-column-total {
-  min-width: 30px;
+  width: 75px;
 }
 .mat-column-mileIncrease {
-  min-width: 75px;
-}
-.mat-column-percentIncrease {
-  min-width: 75px;
+  width: 100px;
 }
 .mat-column-max {
   min-width: 75px;
 }
 .mat-column-maxIncrease {
-  min-width: 75px;
+  min-width: 100px;
 }
 .mat-column-maxPercentIncrease {
   min-width: 75px;

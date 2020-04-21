@@ -21,3 +21,8 @@ export interface RunGroup{
     description?: string;
     runs: RunWeek[];
 }
+export interface TableColumn{
+    property: string;
+    description: string;
+    percentFlg?: boolean;
+}
