@@ -8,9 +8,10 @@ import { NewSetModalComponent } from './components/new-set-modal/new-set-modal.c
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AdminModule } from '../admin/admin.module';
 import { RunsComponent } from './components/runs/runs.component';
+import { RunWeekBottomSheetComponent } from './components/run-week-bottom-sheet/run-week-bottom-sheet.component';
 
 @NgModule({
-  declarations: [HomeComponent, ExerciseComponent, NewSetModalComponent, RunsComponent],
+  declarations: [HomeComponent, ExerciseComponent, NewSetModalComponent, RunsComponent, RunWeekBottomSheetComponent],
   exports: [HomeComponent],
   imports: [
     CommonModule,
