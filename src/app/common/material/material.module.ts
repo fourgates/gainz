@@ -8,11 +8,12 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 @NgModule({
   declarations: [],
   exports: [MatButtonModule, MatToolbarModule, MatMenuModule, 
-    MatTableModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonToggleModule],
+    MatTableModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonToggleModule, MatBottomSheetModule],
   imports: [
     CommonModule
   ]
