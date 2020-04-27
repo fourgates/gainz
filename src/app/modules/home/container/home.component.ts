@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   allSetTypes: SetType[] = [];
   currentExercise: Exercise[] = [];
   currentRun = false;
+  username: ""
   constructor(private exerciseService: ExerciseService, public dialog: MatDialog,
     private _snackBar: MatSnackBar, private authService: AuthService) { }
 
@@ -29,6 +30,11 @@ export class HomeComponent implements OnInit {
   // TODO - fix horizontal scroll
   ngOnInit(): void {
     this.init();
+    let currentUser = localStorage.getItem('user');
+    if(currentUser){
+      this.username = JSON.parse(currentUser).email;
+    }
+    
   }
   init(){
     this.exerciseService.getSetTypes().subscribe(res1=>{

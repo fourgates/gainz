@@ -3,6 +3,10 @@
     color: white;
     text-align: center;
 }
+.home-container{
+    background-color: white;
+    height: 100%;
+}
 .page-content{
     padding:20px
 }
@@ -10,8 +14,15 @@
     float: right;
 }
 .mat-select-value {color: grey;} 
+#exercise-selection{
+    #exercise-selection-filters{
+        #logout-button{
+            float: left
+        }
+    }
+}
 #exercise-icon-container{
-    padding: 20px;
+    padding: 20px 0 20px 0;
     .exercise-icon{
         font-size: 36px;
         float: left;
