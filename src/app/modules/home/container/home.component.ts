@@ -6,6 +6,7 @@ import { NewSetModalComponent } from '../components/new-set-modal/new-set-modal.
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../auth/auth.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-home',
@@ -22,12 +23,9 @@ export class HomeComponent implements OnInit {
   currentExercise: Exercise[] = [];
   currentRun = false;
   username: ""
-  constructor(private exerciseService: ExerciseService, public dialog: MatDialog,
-    private _snackBar: MatSnackBar, private authService: AuthService) { }
+  constructor(private exerciseService: ExerciseService, private messageService: MessageService) { }
 
-  // TODO - create exercise
   // TODO - create set type
-  // TODO - fix horizontal scroll
   ngOnInit(): void {
     this.init();
     let currentUser = localStorage.getItem('user');
@@ -96,7 +94,7 @@ export class HomeComponent implements OnInit {
       let findIndex = this.currentExercise.indexOf(exercise);
       this.currentExercise.splice(findIndex, 1);
       this.calculatePrevWeight();
-      this.addMessage("Set has been deleted");
+      this.messageService.addMessage("Set has been deleted");
     })
   }
   addNewSet(){
@@ -133,37 +131,12 @@ export class HomeComponent implements OnInit {
     console.log('new', newExcercise);
     this.exerciseService.saveUserSet(newExcercise).subscribe(res=>{
       this.loadCurrentExercise();
-      this.addMessage("Exercised Saved");
+      this.messageService.addMessage("Exercised Saved");
     })
-  }
-  createExercise(): void {
-    const dialogRef = this.dialog.open(NewSetModalComponent, {
-      width: '300px',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('result', result);
-      if(result === undefined){
-        return;
-      }
-      let exercise: Exercise = {description: result.exerciseName};
-      this.exerciseService.createExerciseType(exercise).subscribe(res=>{
-        this.addMessage(result.exerciseName + " Has Been Created");
-      });
-    });
   }
   back(){
     this.currentExerciseType = undefined; 
     this.currentExercise = undefined
     this.currentRun = false;
-  }
-  private addMessage(message: string) {
-    this._snackBar.open(message, "Close", {
-      duration: 2000,
-    });
-  }
-  logout(){
-    this.authService.logout();
   }
 }

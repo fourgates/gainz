@@ -1,24 +1,18 @@
-<div id="header">
-    <h1 class="head">Gainz - Dashboard</h1>
-</div>
 <div class="container home-container">
   <div id="exercise-selection" class="row">
     <span id="exercise-selection-filters" class="col-12">
         <mat-toolbar>
+          <span *ngIf="currentExerciseType === undefined && currentRun === false">
+            Dashboard
+          </span>
+          <span *ngIf="currentExerciseType !== undefined || currentRun === true">
+            {{ currentExerciseType.description}}
+          </span>
           <!-- make this button a diff color so it stands out -->
           <button *ngIf="currentExerciseType !== undefined || currentRun === true" mat-button (click)="back()">
             Back
           </button>
           <button mat-button (click)="addNewSet()" *ngIf="currentExerciseType && currentSetType"> Add New Set</button>
-          <button mat-button> Create New Set Type</button>
-          <button mat-button (click)="createExercise()"> Create New Exercise</button>
-          <div>
-            <button mat-button [matMenuTriggerFor]="menu"> {{ username }}</button>
-            <mat-menu #menu="matMenu">
-              <button id="logout-button"mat-button (click)="logout()"> Logout</button>
-            </mat-menu>
-          </div>
-  
         </mat-toolbar>
     </span>
   </div>

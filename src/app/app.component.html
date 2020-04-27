@@ -1,3 +1,21 @@
 <body>
+  <div id="header" class="row">
+    <h1 class="head col-4">Track My Gainz</h1>
+    <div id="exercise-selection" class="col-8">
+      <span id="exercise-selection-filters">
+          <mat-toolbar id="toolbar">
+            <button mat-button> Create New Set Type</button>
+            <button mat-button (click)="createExercise()"> Create New Exercise</button>
+            <div>
+              <button mat-button [matMenuTriggerFor]="menu"> {{ username }}</button>
+              <mat-menu #menu="matMenu">
+                <button id="logout-button"mat-button (click)="logout()"> Logout</button>
+              </mat-menu>
+            </div>
+    
+          </mat-toolbar>
+      </span>
+    </div>
+  </div>
   <router-outlet></router-outlet>
 </body>
