@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Exercise, UserSet, SetType } from '../exercise/exercise.dt';
+import { Exercise, UserSet, SetType } from './exercise.dt';
 import { FormBuilder, FormGroup, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { debounceTime } from 'rxjs/operators';
+
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
@@ -24,9 +25,6 @@ export class ExerciseComponent implements OnInit {
   formSetWeight: FormArray;
   editMode = false;
 
-  // TODO 
-  // 1. create a table component. abstract headers and property
-  // 2. combine exercise & new-exercise
   constructor(private fb: FormBuilder) { 
   }
   displayedColumns: string[] = ['setNumber', 'prevWeight', 'currentWeight', 'expectedRep', 'actualRep', 'adjustedWeight', 'percentChange'];

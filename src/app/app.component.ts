@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewSetModalComponent } from './modules/home/components/new-set-modal/new-set-modal.component';
-import { Exercise } from './modules/home/components/exercise/exercise.dt';
+import { Exercise } from './modules/exercise/components/exercise/exercise.dt';
 import { ExerciseService } from './services/exercise.service';
 import { AuthService } from './modules/auth/auth.service';
 import { MessageService } from './services/message.service';

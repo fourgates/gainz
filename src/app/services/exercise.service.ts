@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Exercise, ExerciseType, SetType } from '../modules/home/components/exercise/exercise.dt';
+import { Observable } from 'rxjs';
+import { Exercise, ExerciseType, SetType } from '../modules/exercise/components/exercise/exercise.dt';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

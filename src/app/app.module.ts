@@ -12,6 +12,7 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { firebaseConfig } from './firebase.config'
 import { AuthInterceptor } from './modules/auth/auth.interceptor'
+import { ExerciseModule } from './modules/exercise/exercise.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AuthInterceptor } from './modules/auth/auth.interceptor'
     AppRoutingModule,
     BrowserAnimationsModule,
     HomeModule,
+    ExerciseModule,
     MaterialModule,
     HttpClientModule,
     FontAwesomeModule,
